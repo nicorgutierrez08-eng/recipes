@@ -5,6 +5,7 @@ import { formatAmount, parseAmount, toDecimalString } from '../lib/format';
 interface Props {
   ingredients: Ingredient[];
   baseServings: number;
+  yieldUnit?: string;
 }
 
 /**
@@ -19,7 +20,8 @@ interface Props {
  * Checkbox state is intentionally in-memory only (React state) — it resets on
  * reload and is never written to localStorage, per the brief.
  */
-export default function IngredientsPanel({ ingredients, baseServings }: Props) {
+export default function IngredientsPanel({ ingredients, baseServings, yieldUnit }: Props) {
+  const unitWord = yieldUnit && yieldUnit !== 'servings' ? yieldUnit.replace(/s$/, '') : 'serving';
   const [factor, setFactor] = useState(1);
   const [checked, setChecked] = useState<Set<number>>(() => new Set());
   const [editIdx, setEditIdx] = useState<number | null>(null);
@@ -84,7 +86,7 @@ export default function IngredientsPanel({ ingredients, baseServings }: Props) {
           >−</button>
           <span className="scaler__value">
             <strong>{niceServings(scaledServings)}</strong>
-            <span className="scaler__unit">{niceServings(scaledServings) === '1' ? 'serving' : 'servings'}</span>
+            <span className="scaler__unit">{niceServings(scaledServings) === '1' ? unitWord : unitWord + 's'}</span>
           </span>
           <button
             type="button"
@@ -137,11 +139,13 @@ export default function IngredientsPanel({ ingredients, baseServings }: Props) {
                       onBlur={() => setEditIdx(null)}
                     />
                     {ing.unit ? <span className="ing-row__unit">{ing.unit}</span> : null}
+                    {factor === 1 && ing.us ? <span className="ing-row__us">({ing.us})</span> : null}
                   </span>
                 )}
                 <label htmlFor={id} className="ing-row__label">
                   <span className="ing-row__item">
                     {ing.item}
+                    {ing.estimated && <span className="ing-row__est" title="Editorial estimate — not from the original reel">est.</span>}
                     {ing.note && <span className="ing-row__note"> · {ing.note}</span>}
                   </span>
                 </label>

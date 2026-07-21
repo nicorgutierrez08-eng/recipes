@@ -3,7 +3,14 @@ id: "R0046"
 codeword: "R0046"
 title: "Unidentified High-Protein Dessert for Dad - Caption Needed"
 description: "A six-slice, protein-focused dessert shared as part of a series about baking for the creator's father while managing blood-sugar impact."
+sourceIngredients: [{"item": "Unavailable", "note": "The accessible caption fragment only shows an INGREDIENTS heading"}]
+sourceInstructions: ["The exact recipe method was not exposed in accessible public results.", "Use the original reel or a copied caption to complete the ingredient formula, preparation sequence, temperatures, and timing."]
+provenance: "Incomplete"
+editorialCompletionStatus: "incomplete"
+editorialNotes: {"inferred": "INSUFFICIENT INFORMATION TO RECONSTRUCT RELIABLY. This record is preserved from the source; the reel did not provide a complete written recipe."}
+ingredients: [{"item": "Unavailable", "note": "The accessible caption fragment only shows an INGREDIENTS heading"}]
 servings: 6
+servingSize: "1 slice"
 cuisine: "Not established"
 meal: "Dessert / Snack"
 mealTags: ["dessert", "snack"]
@@ -16,14 +23,9 @@ flavor: "Not established"
 texture: "Sliced dessert; otherwise unavailable"
 mealPrep: "Likely sliceable; not source-stated"
 freezer: "Not established"
-servingSize: "1 slice"
 source: "https://www.instagram.com/reel/DWmLwTjjbMU/"
 verification: "D"
 nutrition: {"calories": "249", "fat": "7.5 g", "carbs": "23.2 g", "protein": "21 g"}
 keywords: ["21 grams protein", "249 calories", "baking for dad", "caption needed", "dessert", "high protein dessert", "high-protein", "six slices", "sliced dessert", "snack"]
-ingredients: [{"item": "Unavailable", "note": "The accessible caption fragment only shows an INGREDIENTS heading"}]
 ---
 
-The exact recipe method was not exposed in accessible public results.
-
-Use the original reel or a copied caption to complete the ingredient formula, preparation sequence, temperatures, and timing.

@@ -2,8 +2,10 @@
 export interface Ingredient {
   amount?: number;
   unit?: string;
+  us?: string; // common US measure, e.g. "1 cup"
   item: string;
   note?: string;
+  estimated?: boolean;
 }
 
 export interface Nutrition {
@@ -54,6 +56,7 @@ export interface RecipeData {
 
   source?: string;
   verification?: string;
+  provenance?: string;
 
   nutrition?: Nutrition;
   keywords: string[];

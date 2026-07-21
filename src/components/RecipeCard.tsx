@@ -38,9 +38,22 @@ export default function RecipeCard({ recipe, href }: Props) {
           </div>
         )}
         <span className="codeword card__codeword">{r.id}</span>
-        {r.verification && (
-          <span className={`vbadge vbadge--${r.verification}`} title={`Source verification ${r.verification}`}>{r.verification}</span>
-        )}
+        {(() => {
+          const p = r.provenance;
+          const map: Record<string, string> = {
+            'Editorially completed': 'amber',
+            'Culinary reconstruction': 'orange',
+            'Incomplete': 'grey',
+          };
+          const short: Record<string, string> = {
+            'Editorially completed': 'Completed',
+            'Culinary reconstruction': 'Reconstructed',
+            'Incomplete': 'Incomplete',
+          };
+          return p && map[p] ? (
+            <span className={`provbadge provbadge--${map[p]} card__provbadge`} title={p}>{short[p]}</span>
+          ) : null;
+        })()}
       </div>
 
       <div className="card__body">

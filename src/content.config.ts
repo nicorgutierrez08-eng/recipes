@@ -15,9 +15,29 @@ import { glob } from 'astro/loaders';
 const ingredientSchema = z.object({
   amount: z.number().optional(),
   unit: z.string().optional(),
+  us: z.string().optional(), // common US measure, e.g. "1 cup"
   item: z.string().min(1),
   note: z.string().optional(),
+  estimated: z.boolean().optional(), // true when the quantity is an editorial estimate
 });
+
+const storageSchema = z
+  .object({
+    fridge: z.string().optional(),
+    freezer: z.string().optional(),
+    reheat: z.string().optional(),
+    bestFresh: z.boolean().optional(),
+  })
+  .optional();
+
+const editorialNotesSchema = z
+  .object({
+    fromSource: z.string().optional(),
+    inferred: z.string().optional(),
+    addedForUsability: z.string().optional(),
+    nutritionRecalculated: z.boolean().optional(),
+  })
+  .optional();
 
 const nutritionSchema = z
   .object({
@@ -75,9 +95,40 @@ const recipes = defineCollection({
     // --- Nutrition ---
     nutrition: nutritionSchema,
 
+    // --- Provenance & editorial completion (two-layer model) ---
+    provenance: z.string().optional(), // Original | Creator-stated | Editorially completed | Culinary reconstruction | Incomplete
+    editorialCompletionStatus: z.string().optional(),
+    confidenceLevel: z.string().optional(),
+    editorialNotes: editorialNotesSchema,
+    nutritionBasis: z.string().optional(),
+
+    // Source layer (exactly what was recovered)
+    sourceIngredients: z.array(ingredientSchema).optional(),
+    sourceInstructions: z.array(z.string()).optional(),
+
+    // Working layer (completed for usability)
+    workingYield: z.number().optional(),
+    yieldUnit: z.string().optional(),
+    workingPrepTime: z.number().optional(),
+    workingCookTime: z.number().optional(),
+    workingTotalTime: z.number().optional(),
+    workingIngredients: z.array(ingredientSchema).optional(),
+    workingInstructions: z.array(z.string()).optional(),
+    substitutions: z.array(z.string()).optional(),
+    storage: storageSchema,
+    workingNutrition: z
+      .object({
+        calories: z.string().optional(),
+        protein: z.string().optional(),
+        carbs: z.string().optional(),
+        fat: z.string().optional(),
+        basis: z.string().optional(),
+      })
+      .optional(),
+
     // --- Search + content ---
     keywords: z.array(z.string()).optional(),
-    ingredients: z.array(ingredientSchema).optional(),
+    ingredients: z.array(ingredientSchema).optional(), // display list (working ?? source)
     image: z.string().optional(),
   }),
 });

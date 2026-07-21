@@ -14,66 +14,53 @@ const { entry } = Astro.props;
 const d = entry.data;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-function inlineMd(s: string): string {
-  let out = s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  out = out.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-  out = out.replace(/`(.+?)`/g, '<code>$1</code>');
-  return out;
-}
+const prov = d.provenance ?? 'Incomplete';
+const isEstimated = prov === 'Editorially completed' || prov === 'Culinary reconstruction';
+const isIncomplete = prov === 'Incomplete';
 
-const blocks = entry.body.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
-const steps: string[] = [];
-const notes: string[] = [];
-for (const b of blocks) {
-  if (b.startsWith('>')) notes.push(inlineMd(b.replace(/^>\s?/gm, '').replace(/\n/g, ' ').trim()));
-  else steps.push(inlineMd(b.replace(/\n/g, ' ').trim()));
-}
+const steps = (d.workingInstructions?.length ? d.workingInstructions : d.sourceInstructions) ?? [];
+const displayIngredients = d.ingredients ?? [];
+const usingWorking = !!d.workingInstructions?.length || !!d.workingIngredients?.length;
 
-const timeText =
-  d.totalTimeMin != null
-    ? d.totalTimeMin >= 60
-      ? `${Math.floor(d.totalTimeMin / 60)} h${d.totalTimeMin % 60 ? ' ' + (d.totalTimeMin % 60) + ' min' : ''}`
-      : `${d.totalTimeMin} min`
-    : d.totalTimeText;
+// nutrition to display up top
+const nut = d.workingNutrition ?? d.nutrition;
+const cal = d.workingNutrition?.calories ?? d.nutrition?.calories;
+
+function mins(n?: number, text?: string) {
+  if (n != null) return n >= 60 ? `${Math.floor(n / 60)} h${n % 60 ? ' ' + (n % 60) + ' min' : ''}` : `${n} min`;
+  return text && !/not|unavailable|n\/a/i.test(text) ? text : null;
+}
+const timeText = mins(d.workingTotalTime ?? d.totalTimeMin, d.totalTimeText);
 
 const facts = [
   timeText ? { label: 'Total', value: timeText } : null,
-  d.servings ? { label: 'Serves', value: String(d.servings) } : null,
+  d.servings ? { label: d.yieldUnit && d.servingSize ? 'Makes' : 'Serves', value: d.servingSize ?? String(d.servings) } : null,
   d.difficulty ? { label: 'Difficulty', value: d.difficulty } : null,
   d.cost ? { label: 'Cost', value: d.cost } : null,
-  d.nutrition?.calories ? { label: 'Calories', value: d.nutrition.calories } : null,
+  cal ? { label: 'Calories', value: cal.replace(/^~?/, '~') } : null,
 ].filter(Boolean) as Array<{ label: string; value: string }>;
 
 const metaRows = [
-  ['Meal', d.meal],
-  ['Cuisine', d.cuisine],
-  ['Protein', d.protein],
-  ['Dietary', d.dietary],
-  ['Allergens', d.allergens],
-  ['Equipment', d.equipment],
-  ['Method', d.cookingMethod],
-  ['Flavor', d.flavor],
-  ['Texture', d.texture],
-  ['Meal prep', d.mealPrep],
-  ['Freezer', d.freezer],
-  ['Storage', d.storage],
+  ['Meal', d.meal], ['Cuisine', d.cuisine], ['Protein', d.protein], ['Dietary', d.dietary],
+  ['Allergens', d.allergens], ['Equipment', d.equipment], ['Method', d.cookingMethod],
+  ['Flavor', d.flavor], ['Texture', d.texture],
 ].filter(([, v]) => v) as Array<[string, string]>;
 
 const macros = [
-  ['Protein', d.nutrition?.protein],
-  ['Carbs', d.nutrition?.carbs],
-  ['Fat', d.nutrition?.fat],
-  ['Fiber', d.nutrition?.fiber],
-  ['Sugar', d.nutrition?.sugar],
-  ['Sodium', d.nutrition?.sodium],
+  ['Protein', nut?.protein], ['Carbs', (nut as any)?.carbs], ['Fat', (nut as any)?.fat],
+  ['Fiber', (d.nutrition as any)?.fiber], ['Sugar', (d.nutrition as any)?.sugar], ['Sodium', (d.nutrition as any)?.sodium],
 ].filter(([, v]) => v) as Array<[string, string]>;
 
-const VLABEL: Record<string, string> = {
-  A: 'Caption largely available — close to cookable',
-  B: 'Useful partial recipe — a quantity or step may be missing',
-  C: 'Concept known — method is a conservative outline',
-  D: 'Could not be identified — needs a screenshot or caption',
+const PROV_CLASS: Record<string, string> = {
+  'Original': 'green', 'Creator-stated': 'green', 'Editorially completed': 'amber',
+  'Culinary reconstruction': 'orange', 'Incomplete': 'grey',
 };
+const VLABEL: Record<string, string> = {
+  A: 'Caption largely available — close to cookable', B: 'Useful partial recipe — a quantity or step may be missing',
+  C: 'Concept known — method is a conservative outline', D: 'Could not be identified — needs a screenshot or caption',
+};
+const en = d.editorialNotes;
+const hasSourceNotes = !!en || (d.sourceInstructions?.length && usingWorking) || d.verification || d.nutrition;
 ---
 
 <Base title={`${d.title} — The Pantry`} description={d.description ?? d.title}>
@@ -84,41 +71,46 @@ const VLABEL: Record<string, string> = {
         Back to the library
       </a>
 
-      <header class="recipe__header recipe__header--solo">
-        <div class="recipe__headtext">
-          <div class="recipe__eyebrow">
-            <span class="codeword recipe__codeword">{d.id}</span>
-            {d.verification && (
-              <span class={`vbadge vbadge--${d.verification}`} title={VLABEL[d.verification]}>Level {d.verification}</span>
-            )}
-          </div>
-          <h1 class="recipe__title">{d.title}</h1>
-          {d.description && <p class="recipe__desc">{d.description}</p>}
-
-          <dl class="facts">
-            {facts.map((f) => (
-              <div class="facts__item"><dt>{f.label}</dt><dd>{f.value}</dd></div>
-            ))}
-          </dl>
-
-          {d.source && (
-            <p class="recipe__source">
-              <a href={d.source} target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
-                View original reel
-              </a>
-            </p>
-          )}
+      <header class="recipe__header--solo">
+        <div class="recipe__eyebrow">
+          <span class="codeword recipe__codeword">{d.id}</span>
+          <span class={`provbadge provbadge--${PROV_CLASS[prov]}`}>{prov}</span>
+          {d.verification && <span class={`vbadge vbadge--${d.verification}`} title={VLABEL[d.verification]}>Source {d.verification}</span>}
         </div>
+        <h1 class="recipe__title">{d.title}</h1>
+        {d.description && <p class="recipe__desc">{d.description}</p>}
+
+        {isEstimated && (
+          <p class="disclaimer">
+            <strong>Working version.</strong> This includes estimated quantities or steps added for usability because
+            the original reel didn't provide a complete written recipe. See <a href="#source-notes">source &amp; accuracy notes</a>.
+          </p>
+        )}
+        {isIncomplete && (
+          <p class="disclaimer disclaimer--warn">
+            <strong>Incomplete record.</strong> {en?.inferred ?? 'The original reel did not provide a usable written recipe, and the dish could not be reconstructed responsibly.'}
+          </p>
+        )}
+
+        {facts.length > 0 && (
+          <dl class="facts">
+            {facts.map((f) => (<div class="facts__item"><dt>{f.label}</dt><dd>{f.value}</dd></div>))}
+          </dl>
+        )}
+        {d.source && (
+          <p class="recipe__source">
+            <a href={d.source} target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+              View original reel
+            </a>
+          </p>
+        )}
       </header>
 
       {metaRows.length > 0 && (
         <div class="metatags">
           {metaRows.map(([label, value]) => (
-            <div class="metatags__row">
-              <span class="metatags__label">{label}</span>
-              <span class="metatags__value">{value}</span>
-            </div>
+            <div class="metatags__row"><span class="metatags__label">{label}</span><span class="metatags__value">{value}</span></div>
           ))}
         </div>
       )}
@@ -127,27 +119,32 @@ const VLABEL: Record<string, string> = {
 
       <div class="recipe__cols">
         <aside class="recipe__aside">
-          {d.ingredients && d.ingredients.length > 0 ? (
-            <IngredientsPanel client:load ingredients={d.ingredients} baseServings={d.servings ?? 1} />
+          {displayIngredients.length > 0 ? (
+            <IngredientsPanel client:load ingredients={displayIngredients} baseServings={d.servings ?? 1} yieldUnit={d.yieldUnit} />
           ) : (
-            <div class="ingredients">
-              <h2 class="section-title">Ingredients</h2>
-              <p class="ingredients__hint">Ingredient list wasn't recovered from the source for this one.</p>
+            <div class="ingredients"><h2 class="section-title">Ingredients</h2><p class="ingredients__hint">No ingredient list was recovered for this record.</p></div>
+          )}
+
+          {d.storage && (d.storage.fridge || d.storage.freezer || d.storage.reheat) && (
+            <div class="storage">
+              <h3 class="storage__title">Storage</h3>
+              <ul class="storage__list">
+                {d.storage.fridge && <li><strong>Fridge:</strong> {d.storage.fridge}</li>}
+                {d.storage.freezer && <li><strong>Freezer:</strong> {d.storage.freezer}</li>}
+                {d.storage.reheat && <li><strong>Reheat:</strong> {d.storage.reheat}</li>}
+                {d.storage.bestFresh && <li><em>Best eaten fresh.</em></li>}
+              </ul>
             </div>
           )}
 
-          {(d.nutrition?.calories || macros.length > 0) && (
+          {(cal || macros.length > 0) && (
             <div class="nutrition">
-              <h3 class="nutrition__title">Nutrition {d.nutrition?.serving ? <span class="nutrition__serving">· {d.nutrition.serving}</span> : null}</h3>
+              <h3 class="nutrition__title">Nutrition {nut?.basis ? <span class="nutrition__serving">· {nut.basis}</span> : d.nutrition?.serving ? <span class="nutrition__serving">· {d.nutrition.serving}</span> : null}</h3>
               <div class="nutrition__grid">
-                {d.nutrition?.calories && (
-                  <div class="nutrition__cell nutrition__cell--cal"><span class="nutrition__num">{d.nutrition.calories}</span><span class="nutrition__lab">calories</span></div>
-                )}
-                {macros.map(([label, value]) => (
-                  <div class="nutrition__cell"><span class="nutrition__num">{value}</span><span class="nutrition__lab">{label}</span></div>
-                ))}
+                {cal && <div class="nutrition__cell nutrition__cell--cal"><span class="nutrition__num">{cal.replace(/^~?/, '~')}</span><span class="nutrition__lab">calories</span></div>}
+                {macros.map(([label, value]) => (<div class="nutrition__cell"><span class="nutrition__num">{value}</span><span class="nutrition__lab">{label}</span></div>))}
               </div>
-              {d.nutrition?.status && <p class="nutrition__status">{labelize(d.nutrition.status)} values</p>}
+              <p class="nutrition__status">{d.nutritionBasis ? 'Calculated from the editorial working recipe — an estimate.' : d.nutrition?.status ? `${labelize(d.nutrition.status)} values.` : ''}</p>
             </div>
           )}
         </aside>
@@ -156,20 +153,39 @@ const VLABEL: Record<string, string> = {
           {steps.length > 0 && (
             <>
               <h2 class="section-title">Method</h2>
-              <ol class="steps">
-                {steps.map((s) => (
-                  <li class="step"><div class="step__text" set:html={s} /></li>
-                ))}
-              </ol>
+              <ol class="steps">{steps.map((s) => (<li class="step"><div class="step__text">{s}</div></li>))}</ol>
             </>
           )}
 
-          {notes.length > 0 && (
-            <div class="notes">
-              {notes.map((n) => (
-                <p class="note" set:html={n} />
-              ))}
+          {d.substitutions && d.substitutions.length > 0 && (
+            <div class="subs">
+              <h3 class="subs__title">Substitutions</h3>
+              <ul class="subs__list">{d.substitutions.map((s) => <li>{s}</li>)}</ul>
             </div>
+          )}
+
+          {hasSourceNotes && (
+            <details class="source-notes" id="source-notes">
+              <summary>Source &amp; accuracy notes</summary>
+              <div class="source-notes__body">
+                {en?.fromSource && <p><strong>From the creator:</strong> {en.fromSource}</p>}
+                {en?.addedForUsability && <p><strong>Added for usability:</strong> {en.addedForUsability}</p>}
+                {en?.inferred && !isIncomplete && <p><strong>Inferred:</strong> {en.inferred}</p>}
+                {d.nutritionBasis && <p><strong>Nutrition:</strong> {d.nutritionBasis.toLowerCase().includes('calculated') ? 'recalculated from the working recipe (estimate).' : d.nutritionBasis}</p>}
+                {usingWorking && d.sourceIngredients && d.sourceIngredients.length > 0 && (
+                  <details class="source-notes__sub"><summary>Original source ingredients ({d.sourceIngredients.length})</summary>
+                    <ul>{d.sourceIngredients.map((i) => <li>{[i.amount, i.unit, i.item].filter(Boolean).join(' ')}{i.note ? ` — ${i.note}` : ''}</li>)}</ul>
+                  </details>
+                )}
+                {usingWorking && d.sourceInstructions && d.sourceInstructions.length > 0 && (
+                  <details class="source-notes__sub"><summary>Original source method ({d.sourceInstructions.length} steps)</summary>
+                    <ol>{d.sourceInstructions.map((s) => <li>{s}</li>)}</ol>
+                  </details>
+                )}
+                {d.verification && <p><strong>Source verification:</strong> Level {d.verification} — {VLABEL[d.verification]}.</p>}
+                {d.nutrition?.calories && <p><strong>Creator-stated nutrition:</strong> {[d.nutrition.calories && `${d.nutrition.calories} cal`, d.nutrition.protein && `${d.nutrition.protein} protein`].filter(Boolean).join(', ')} {d.nutrition.status ? `(${d.nutrition.status.toLowerCase()})` : ''}.</p>}
+              </div>
+            </details>
           )}
         </section>
       </div>
@@ -179,9 +195,6 @@ const VLABEL: Record<string, string> = {
   <script define:vars={{ base }}>
     const params = new URLSearchParams(window.location.search);
     const from = params.get('from');
-    if (from) {
-      const link = document.getElementById('back-link');
-      if (link) link.setAttribute('href', `${base}/?${from}`);
-    }
+    if (from) { const link = document.getElementById('back-link'); if (link) link.setAttribute('href', `${base}/?${from}`); }
   </script>
 </Base>
