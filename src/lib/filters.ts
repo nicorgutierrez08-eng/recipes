@@ -163,6 +163,22 @@ export function recipeWords(r: RecipeData): string[] {
   return out;
 }
 
+/** True when a and b are within one edit (insert/delete/substitute) of each other. */
+function within1(a: string, b: string): boolean {
+  const la = a.length, lb = b.length;
+  if (Math.abs(la - lb) > 1) return false;
+  let i = 0, j = 0, edits = 0;
+  while (i < la && j < lb) {
+    if (a[i] === b[j]) { i++; j++; continue; }
+    if (++edits > 1) return false;
+    if (la > lb) i++;
+    else if (lb > la) j++;
+    else { i++; j++; }
+  }
+  if (i < la || j < lb) edits++;
+  return edits <= 1;
+}
+
 export function keywordMatches(words: string[], keyword: string): boolean {
   const parts = keyword.toLowerCase().split(/\s+/).filter(Boolean);
   if (!parts.length) return true;
@@ -171,6 +187,9 @@ export function keywordMatches(words: string[], keyword: string): boolean {
     for (const w of words) {
       if (w === kw) return true;
       if (kw.length >= 3 && w.startsWith(kw)) return true;
+      // Forgive a single typo — but only on longer words, so short words like
+      // "pasta"/"paste" never collide while "chikn"→"chicken" still matches.
+      if (kw.length >= 6 && w.length >= 5 && within1(w, kw)) return true;
     }
     return false;
   });
