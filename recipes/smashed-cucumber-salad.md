@@ -16,7 +16,7 @@ dietary: [vegan, gluten-free, dairy-free]
 source: Summer side that disappears first
 rating: 4
 dateAdded: 2026-06-28
-tags: [crunchy, refreshing, side, five-minute]
+tags: [crunchy, refreshing, side, five-minute, asian]
 ingredients:
   - { amount: 2, item: english cucumbers }
   - { amount: 1, unit: tsp, item: kosher salt }

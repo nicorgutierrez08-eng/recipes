@@ -16,7 +16,7 @@ dietary: [dairy-free]
 source: https://example.com/miso-salmon
 rating: 5
 dateAdded: 2026-07-01
-tags: [glazed, umami, sheet-pan, elegant]
+tags: [glazed, umami, sheet-pan, elegant, asian]
 image: /images/miso-glazed-salmon.svg
 ingredients:
   - { amount: 4, item: salmon fillets, note: 6 oz each, skin on }

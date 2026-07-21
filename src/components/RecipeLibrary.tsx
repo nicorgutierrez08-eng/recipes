@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import Fuse from 'fuse.js';
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import type { FilterState, RecipeData } from '../lib/types';
 import {
   EMPTY_FILTERS,
@@ -12,6 +11,8 @@ import {
   matchesFacets,
   sortRecipes,
   countActive,
+  recipeWords,
+  keywordMatches,
   type MultiField,
 } from '../lib/filters';
 import { labelize } from '../lib/format';
@@ -49,6 +50,7 @@ function optionLabel(field: MultiField, value: string): string {
 
 export default function RecipeLibrary({ recipes, base }: Props) {
   const [filters, setFilters] = useState<FilterState>(EMPTY_FILTERS);
+  const [draft, setDraft] = useState(''); // the keyword currently being typed
   const [panelOpen, setPanelOpen] = useState(false);
   const hydrated = useRef(false);
 
@@ -70,31 +72,34 @@ export default function RecipeLibrary({ recipes, base }: Props) {
 
   const facets = useMemo(() => buildFacets(recipes), [recipes]);
 
-  const fuse = useMemo(
-    () =>
-      new Fuse(recipes, {
-        includeScore: false,
-        threshold: 0.42, // forgiving of typos
-        ignoreLocation: true,
-        keys: [
-          { name: 'title', weight: 3 },
-          { name: 'codeword', weight: 3 },
-          { name: 'tags', weight: 2 },
-          { name: 'ingredients.item', weight: 1.5 },
-          { name: 'cuisine', weight: 1 },
-        ],
-      }),
-    [recipes]
-  );
+  // Precompute each recipe's searchable words once.
+  const wordIndex = useMemo(() => {
+    const m = new Map<string, string[]>();
+    for (const r of recipes) m.set(r.slug, recipeWords(r));
+    return m;
+  }, [recipes]);
+
+  // Pinned keyword chips plus whatever is being typed right now, so results
+  // filter live and each keyword narrows (AND) the set.
+  const activeKeywords = useMemo(() => {
+    const list = [...filters.keywords];
+    const d = draft.trim().toLowerCase();
+    if (d && !list.includes(d)) list.push(d);
+    return list;
+  }, [filters.keywords, draft]);
 
   const results = useMemo(() => {
-    const q = filters.q.trim();
-    const base = q ? fuse.search(q).map((res) => res.item) : recipes;
+    let base = recipes;
+    if (activeKeywords.length) {
+      // A recipe must match EVERY keyword (AND), using precise word-level matching.
+      base = recipes.filter((r) => {
+        const words = wordIndex.get(r.slug) ?? [];
+        return activeKeywords.every((kw) => keywordMatches(words, kw));
+      });
+    }
     const filtered = base.filter((r) => matchesFacets(r, filters));
-    // When searching with the default sort, preserve fuzzy relevance order.
-    if (q && filters.sort === 'date') return filtered;
     return sortRecipes(filtered, filters.sort);
-  }, [filters, fuse, recipes]);
+  }, [filters, activeKeywords, wordIndex, recipes]);
 
   const activeCount = countActive(filters);
 
@@ -108,18 +113,32 @@ export default function RecipeLibrary({ recipes, base }: Props) {
   };
   const setTime = (value: string) =>
     setFilters((f) => ({ ...f, time: f.time === value ? '' : value }));
-  const clearAll = () =>
+  const clearAll = () => {
+    setDraft('');
     setFilters((f) => ({ ...EMPTY_FILTERS, sort: f.sort }));
+  };
 
-  // --- Build the removable active-chip list ---
+  // --- Keyword tokens ---
+  const commitKeyword = () => {
+    const kw = draft.trim().toLowerCase();
+    setDraft('');
+    if (!kw) return;
+    setFilters((f) => (f.keywords.includes(kw) ? f : { ...f, keywords: [...f.keywords, kw] }));
+  };
+  const removeKeyword = (kw: string) =>
+    setFilters((f) => ({ ...f, keywords: f.keywords.filter((k) => k !== kw) }));
+  const onKeywordKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault();
+      commitKeyword();
+    } else if (e.key === 'Backspace' && draft === '' && filters.keywords.length) {
+      // Backspace on an empty box removes the last keyword.
+      setFilters((f) => ({ ...f, keywords: f.keywords.slice(0, -1) }));
+    }
+  };
+
+  // --- Build the removable active-chip list (facets only; keyword tokens live in the search box) ---
   const chips: Array<{ key: string; label: string; onRemove: () => void }> = [];
-  if (filters.q.trim()) {
-    chips.push({
-      key: 'q',
-      label: `“${filters.q.trim()}”`,
-      onRemove: () => setFilters((f) => ({ ...f, q: '' })),
-    });
-  }
   for (const field of MULTI_FIELDS) {
     for (const value of filters[field]) {
       chips.push({
@@ -149,20 +168,40 @@ export default function RecipeLibrary({ recipes, base }: Props) {
     <div className="library">
       {/* ---------------- Search + controls ---------------- */}
       <div className="library__controls">
-        <div className="search">
+        <div className="search" onClick={(e) => (e.currentTarget.querySelector('input') as HTMLInputElement | null)?.focus()}>
           <svg className="search__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
             <circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" />
           </svg>
-          <input
-            type="search"
-            className="search__input"
-            placeholder="Search a codeword, dish, or ingredient…"
-            aria-label="Search recipes"
-            value={filters.q}
-            onChange={(e) => setFilters((f) => ({ ...f, q: e.target.value }))}
-          />
-          {filters.q && (
-            <button className="search__clear" onClick={() => setFilters((f) => ({ ...f, q: '' }))} aria-label="Clear search">×</button>
+          <div className="search__tokens">
+            {filters.keywords.map((kw) => (
+              <span className="ktoken" key={kw}>
+                {kw}
+                <button
+                  type="button"
+                  className="ktoken__x"
+                  onClick={(e) => { e.stopPropagation(); removeKeyword(kw); }}
+                  aria-label={`Remove keyword ${kw}`}
+                >×</button>
+              </span>
+            ))}
+            <input
+              type="text"
+              className="search__input"
+              placeholder={filters.keywords.length ? 'Add another keyword…' : 'Type a keyword, press Enter…'}
+              aria-label="Add a search keyword, then press Enter"
+              value={draft}
+              autoComplete="off"
+              onChange={(e) => setDraft(e.target.value)}
+              onKeyDown={onKeywordKeyDown}
+              onBlur={commitKeyword}
+            />
+          </div>
+          {(filters.keywords.length > 0 || draft) && (
+            <button
+              className="search__clear"
+              onClick={(e) => { e.stopPropagation(); setDraft(''); setFilters((f) => ({ ...f, keywords: [] })); }}
+              aria-label="Clear all keywords"
+            >×</button>
           )}
         </div>
 
@@ -243,9 +282,9 @@ export default function RecipeLibrary({ recipes, base }: Props) {
       <div className="library__summary">
         <p className="count" aria-live="polite">
           <strong>{results.length}</strong> {results.length === 1 ? 'recipe' : 'recipes'}
-          {activeCount > 0 && <span className="count__of"> of {recipes.length}</span>}
+          {(activeCount > 0 || activeKeywords.length > 0) && <span className="count__of"> of {recipes.length}</span>}
         </p>
-        {chips.length > 0 && (
+        {(chips.length > 0 || filters.keywords.length > 0) && (
           <div className="active-chips">
             {chips.map((c) => (
               <button key={c.key} className="active-chip" onClick={c.onRemove}>

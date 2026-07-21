@@ -47,6 +47,17 @@
   flex: 1 1 320px;
   display: flex;
   align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0.3rem 2.4rem 0.3rem 2.7rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  background: var(--card);
+  cursor: text;
+}
+.search:focus-within {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 1px var(--focus);
 }
 .search__icon {
   position: absolute;
@@ -54,22 +65,50 @@
   color: var(--ink-faint);
   pointer-events: none;
 }
+.search__tokens {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 1;
+  min-width: 0;
+  padding-block: 0.15rem;
+}
+.ktoken {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.2rem 0.2rem 0.2rem 0.6rem;
+  background: var(--paprika);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.ktoken__x {
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 1.05rem;
+  line-height: 1;
+  padding: 0 0.25rem;
+  opacity: 0.85;
+  border-radius: 50%;
+}
+.ktoken__x:hover { opacity: 1; background: rgba(255, 255, 255, 0.2); }
 .search__input {
-  width: 100%;
+  flex: 1;
+  min-width: 8rem;
+  border: 0;
+  background: transparent;
   font-family: inherit;
   font-size: 1rem;
-  padding: 0.7rem 2.4rem 0.7rem 2.7rem;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--r-md);
-  background: var(--card);
   color: var(--ink);
-  min-height: 44px;
+  padding: 0.35rem 0;
 }
+.search__input:focus { outline: none; }
 .search__input::placeholder { color: var(--ink-faint); }
-.search__input:focus-visible {
-  border-color: var(--focus);
-  outline-offset: 1px;
-}
 .search__clear {
   position: absolute;
   right: 0.5rem;

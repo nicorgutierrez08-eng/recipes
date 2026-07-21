@@ -16,7 +16,7 @@ dietary: [vegetarian]
 source: https://example.com/tomato-ramen
 rating: 4
 dateAdded: 2026-05-18
-tags: [comfort, brothy, umami, noodles]
+tags: [comfort, brothy, umami, noodles, asian, soup]
 image: /images/silky-tomato-ramen.svg
 ingredients:
   - { amount: 2, unit: tbsp, item: toasted sesame oil }

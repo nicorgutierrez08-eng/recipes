@@ -55,7 +55,7 @@ export interface RecipeData {
 
 /** Which key each URL query param maps to, for filter state (de)serialization. */
 export interface FilterState {
-  q: string; // free-text search
+  keywords: string[]; // search keyword tokens (AND-combined)
   cuisine: string[];
   mealType: string[];
   protein: string[];
