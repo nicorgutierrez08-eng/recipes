@@ -1,12 +1,3 @@
-import type {
-  MEAL_TYPES,
-  DIETARY,
-  DIFFICULTY,
-  SEASONS,
-  OCCASIONS,
-  EQUIPMENT,
-} from '../content.config';
-
 /** One ingredient line. `amount` scales when the servings scaler changes. */
 export interface Ingredient {
   amount?: number;
@@ -15,56 +6,70 @@ export interface Ingredient {
   note?: string;
 }
 
-export type MealType = (typeof MEAL_TYPES)[number];
-export type Dietary = (typeof DIETARY)[number];
-export type Difficulty = (typeof DIFFICULTY)[number];
-export type Season = (typeof SEASONS)[number];
-export type Occasion = (typeof OCCASIONS)[number];
-export type Equipment = (typeof EQUIPMENT)[number];
+export interface Nutrition {
+  serving?: string;
+  calories?: string;
+  protein?: string;
+  carbs?: string;
+  fat?: string;
+  fiber?: string;
+  sugar?: string;
+  sodium?: string;
+  status?: string;
+}
 
 /**
- * The recipe shape as it is handed to the client-side React island.
- * Dates are serialized to ISO strings (Date objects don't survive JSON),
- * and `totalTime`/`slug` are computed at build time so the client does no work.
+ * The recipe shape handed to the client-side React island. Imported from Nico's
+ * master document, so nearly everything is optional.
  */
 export interface RecipeData {
   slug: string;
+  id: string;
   title: string;
-  codeword: string;
-  servings: number;
-  prepTime: number;
-  cookTime: number;
-  totalTime: number; // prepTime + cookTime, computed at build
-  ingredients: Ingredient[];
+  description?: string;
+
+  servings?: number;
+  servingSize?: string;
+  totalTimeMin?: number;
+  totalTimeText?: string;
 
   cuisine?: string;
-  mealType?: MealType;
+  meal?: string;
+  mealTags: string[];
   protein?: string;
-  dietary?: Dietary[];
-  difficulty?: Difficulty;
-  spiceLevel?: number;
-  season?: Season[];
-  occasion?: Occasion[];
-  equipment?: Equipment[];
+  proteinTags: string[];
+  difficulty?: string;
+  difficultyText?: string;
+  cost?: string;
+  dietary?: string;
+  dietaryTags: string[];
+  allergens?: string;
+  equipment?: string;
+  cookingMethod?: string;
+  flavor?: string;
+  texture?: string;
+  mealPrep?: string;
+  freezer?: string;
+  storage?: string;
+
   source?: string;
-  rating?: number;
-  dateAdded?: string; // ISO string
-  tags?: string[];
+  verification?: string;
+
+  nutrition?: Nutrition;
+  keywords: string[];
+  ingredients: Ingredient[];
   image?: string;
 }
 
 /** Which key each URL query param maps to, for filter state (de)serialization. */
 export interface FilterState {
-  keywords: string[]; // search keyword tokens (AND-combined)
-  cuisine: string[];
-  mealType: string[];
+  keywords: string[];
+  meal: string[];
   protein: string[];
   dietary: string[];
   difficulty: string[];
-  spiceLevel: string[];
-  season: string[];
-  occasion: string[];
-  equipment: string[];
-  time: string; // one of '', '15', '30', '45', '60', '60+'
-  sort: string; // 'date' | 'rating' | 'time' | 'alpha'
+  cost: string[];
+  verification: string[];
+  time: string;
+  sort: string;
 }

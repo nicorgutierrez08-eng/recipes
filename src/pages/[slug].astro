@@ -2,8 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import IngredientsPanel from '../components/IngredientsPanel.tsx';
-import RatingStars from '../components/RatingStars.tsx';
-import { formatDuration, formatDate, labelize } from '../lib/format';
+import { labelize } from '../lib/format';
 import '../styles/recipe.css';
 
 export async function getStaticPaths() {
@@ -14,56 +13,70 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const d = entry.data;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const totalTime = d.prepTime + d.cookTime;
-const image = d.image ? `${base}${d.image}` : undefined;
-const isUrl = d.source ? /^https?:\/\//i.test(d.source) : false;
 
-// --- Split the markdown body into numbered steps (and pull out any > notes) ---
 function inlineMd(s: string): string {
-  let out = s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+  let out = s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   out = out.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   out = out.replace(/`(.+?)`/g, '<code>$1</code>');
-  out = out.replace(/(^|[^*])\*(?!\s)(.+?)\*/g, '$1<em>$2</em>');
   return out;
 }
 
-const blocks = entry.body
-  .split(/\n\s*\n/)
-  .map((b) => b.trim())
-  .filter(Boolean);
-
+const blocks = entry.body.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
 const steps: string[] = [];
 const notes: string[] = [];
 for (const b of blocks) {
-  if (b.startsWith('>')) {
-    notes.push(inlineMd(b.replace(/^>\s?/gm, '').replace(/\n/g, ' ').trim()));
-  } else {
-    steps.push(inlineMd(b.replace(/\n/g, ' ').trim()));
-  }
+  if (b.startsWith('>')) notes.push(inlineMd(b.replace(/^>\s?/gm, '').replace(/\n/g, ' ').trim()));
+  else steps.push(inlineMd(b.replace(/\n/g, ' ').trim()));
 }
 
-// --- Metadata "facts" and tag groups for the header ---
+const timeText =
+  d.totalTimeMin != null
+    ? d.totalTimeMin >= 60
+      ? `${Math.floor(d.totalTimeMin / 60)} h${d.totalTimeMin % 60 ? ' ' + (d.totalTimeMin % 60) + ' min' : ''}`
+      : `${d.totalTimeMin} min`
+    : d.totalTimeText;
+
 const facts = [
-  { label: 'Prep', value: formatDuration(d.prepTime) },
-  { label: 'Cook', value: formatDuration(d.cookTime) },
-  { label: 'Total', value: formatDuration(totalTime) },
-  { label: 'Serves', value: String(d.servings) },
-];
+  timeText ? { label: 'Total', value: timeText } : null,
+  d.servings ? { label: 'Serves', value: String(d.servings) } : null,
+  d.difficulty ? { label: 'Difficulty', value: d.difficulty } : null,
+  d.cost ? { label: 'Cost', value: d.cost } : null,
+  d.nutrition?.calories ? { label: 'Calories', value: d.nutrition.calories } : null,
+].filter(Boolean) as Array<{ label: string; value: string }>;
 
-const tagGroups: Array<{ label: string; values: string[]; kind: string }> = [];
-if (d.dietary?.length) tagGroups.push({ label: 'Dietary', values: d.dietary, kind: 'diet' });
-if (d.season?.length) tagGroups.push({ label: 'Season', values: d.season, kind: 'season' });
-if (d.occasion?.length) tagGroups.push({ label: 'Occasion', values: d.occasion, kind: 'occasion' });
-if (d.equipment?.length) tagGroups.push({ label: 'Equipment', values: d.equipment, kind: 'equipment' });
-if (d.tags?.length) tagGroups.push({ label: 'Tags', values: d.tags, kind: 'tag' });
+const metaRows = [
+  ['Meal', d.meal],
+  ['Cuisine', d.cuisine],
+  ['Protein', d.protein],
+  ['Dietary', d.dietary],
+  ['Allergens', d.allergens],
+  ['Equipment', d.equipment],
+  ['Method', d.cookingMethod],
+  ['Flavor', d.flavor],
+  ['Texture', d.texture],
+  ['Meal prep', d.mealPrep],
+  ['Freezer', d.freezer],
+  ['Storage', d.storage],
+].filter(([, v]) => v) as Array<[string, string]>;
 
-const spiceLabels = ['No heat', 'Mild', 'Medium', 'Hot'];
+const macros = [
+  ['Protein', d.nutrition?.protein],
+  ['Carbs', d.nutrition?.carbs],
+  ['Fat', d.nutrition?.fat],
+  ['Fiber', d.nutrition?.fiber],
+  ['Sugar', d.nutrition?.sugar],
+  ['Sodium', d.nutrition?.sodium],
+].filter(([, v]) => v) as Array<[string, string]>;
+
+const VLABEL: Record<string, string> = {
+  A: 'Caption largely available — close to cookable',
+  B: 'Useful partial recipe — a quantity or step may be missing',
+  C: 'Concept known — method is a conservative outline',
+  D: 'Could not be identified — needs a screenshot or caption',
+};
 ---
 
-<Base title={`${d.title} — The Pantry`} description={`${d.title} (${d.codeword})`}>
+<Base title={`${d.title} — The Pantry`} description={d.description ?? d.title}>
   <article class="recipe">
     <div class="container recipe__inner">
       <a id="back-link" class="back-link" href={`${base}/`}>
@@ -71,77 +84,85 @@ const spiceLabels = ['No heat', 'Mild', 'Medium', 'Hot'];
         Back to the library
       </a>
 
-      <header class="recipe__header">
+      <header class="recipe__header recipe__header--solo">
         <div class="recipe__headtext">
-          <span class="codeword recipe__codeword">{d.codeword}</span>
-          <h1 class="recipe__title">{d.title}</h1>
-
-          <div class="recipe__topline">
-            {d.rating && (
-              <span class="recipe__rating"><RatingStars value={d.rating} size={18} /></span>
-            )}
-            {d.cuisine && <span class="recipe__tagline">{labelize(d.cuisine)}</span>}
-            {d.mealType && <span class="recipe__tagline">{labelize(d.mealType)}</span>}
-            {d.difficulty && <span class={`pill pill--${d.difficulty}`}>{labelize(d.difficulty)}</span>}
-            {typeof d.spiceLevel === 'number' && (
-              <span class="recipe__tagline">{spiceLabels[d.spiceLevel]}{d.spiceLevel > 0 ? ` ${'🌶'.repeat(d.spiceLevel)}` : ''}</span>
+          <div class="recipe__eyebrow">
+            <span class="codeword recipe__codeword">{d.id}</span>
+            {d.verification && (
+              <span class={`vbadge vbadge--${d.verification}`} title={VLABEL[d.verification]}>Level {d.verification}</span>
             )}
           </div>
+          <h1 class="recipe__title">{d.title}</h1>
+          {d.description && <p class="recipe__desc">{d.description}</p>}
 
           <dl class="facts">
             {facts.map((f) => (
-              <div class="facts__item">
-                <dt>{f.label}</dt>
-                <dd>{f.value}</dd>
-              </div>
+              <div class="facts__item"><dt>{f.label}</dt><dd>{f.value}</dd></div>
             ))}
-            {d.protein && d.protein !== 'none' && (
-              <div class="facts__item"><dt>Protein</dt><dd>{labelize(d.protein)}</dd></div>
-            )}
           </dl>
-        </div>
 
-        {image && (
-          <div class="recipe__media">
-            <img src={image} alt={d.title} width="800" height="600" />
-          </div>
-        )}
+          {d.source && (
+            <p class="recipe__source">
+              <a href={d.source} target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+                View original reel
+              </a>
+            </p>
+          )}
+        </div>
       </header>
 
-      {tagGroups.length > 0 && (
+      {metaRows.length > 0 && (
         <div class="metatags">
-          {tagGroups.map((g) => (
+          {metaRows.map(([label, value]) => (
             <div class="metatags__row">
-              <span class="metatags__label">{g.label}</span>
-              <span class="metatags__values">
-                {g.values.map((v) => <span class={`tag tag--${g.kind}`}>{labelize(v)}</span>)}
-              </span>
+              <span class="metatags__label">{label}</span>
+              <span class="metatags__value">{value}</span>
             </div>
           ))}
         </div>
-      )}
-
-      {d.source && (
-        <p class="recipe__source">
-          Source: {isUrl ? <a href={d.source} rel="noopener noreferrer">{d.source}</a> : <span>{d.source}</span>}
-          {d.dateAdded && <span class="recipe__added"> · added {formatDate(d.dateAdded.toISOString())}</span>}
-        </p>
       )}
 
       <hr class="perforation recipe__rule" />
 
       <div class="recipe__cols">
         <aside class="recipe__aside">
-          <IngredientsPanel client:load ingredients={d.ingredients} baseServings={d.servings} />
+          {d.ingredients && d.ingredients.length > 0 ? (
+            <IngredientsPanel client:load ingredients={d.ingredients} baseServings={d.servings ?? 1} />
+          ) : (
+            <div class="ingredients">
+              <h2 class="section-title">Ingredients</h2>
+              <p class="ingredients__hint">Ingredient list wasn't recovered from the source for this one.</p>
+            </div>
+          )}
+
+          {(d.nutrition?.calories || macros.length > 0) && (
+            <div class="nutrition">
+              <h3 class="nutrition__title">Nutrition {d.nutrition?.serving ? <span class="nutrition__serving">· {d.nutrition.serving}</span> : null}</h3>
+              <div class="nutrition__grid">
+                {d.nutrition?.calories && (
+                  <div class="nutrition__cell nutrition__cell--cal"><span class="nutrition__num">{d.nutrition.calories}</span><span class="nutrition__lab">calories</span></div>
+                )}
+                {macros.map(([label, value]) => (
+                  <div class="nutrition__cell"><span class="nutrition__num">{value}</span><span class="nutrition__lab">{label}</span></div>
+                ))}
+              </div>
+              {d.nutrition?.status && <p class="nutrition__status">{labelize(d.nutrition.status)} values</p>}
+            </div>
+          )}
         </aside>
 
         <section class="method">
-          <h2 class="section-title">Method</h2>
-          <ol class="steps">
-            {steps.map((s) => (
-              <li class="step"><div class="step__text" set:html={s} /></li>
-            ))}
-          </ol>
+          {steps.length > 0 && (
+            <>
+              <h2 class="section-title">Method</h2>
+              <ol class="steps">
+                {steps.map((s) => (
+                  <li class="step"><div class="step__text" set:html={s} /></li>
+                ))}
+              </ol>
+            </>
+          )}
 
           {notes.length > 0 && (
             <div class="notes">
@@ -156,7 +177,6 @@ const spiceLabels = ['No heat', 'Mild', 'Medium', 'Hot'];
   </article>
 
   <script define:vars={{ base }}>
-    // Restore the library's previous filter state on the back link (URL-encoded in ?from=)
     const params = new URLSearchParams(window.location.search);
     const from = params.get('from');
     if (from) {

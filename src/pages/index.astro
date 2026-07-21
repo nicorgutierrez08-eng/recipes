@@ -12,26 +12,36 @@ const recipes: RecipeData[] = entries.map((entry) => {
   const d = entry.data;
   return {
     slug: entry.id,
+    id: d.id,
     title: d.title,
-    codeword: d.codeword,
+    description: d.description,
     servings: d.servings,
-    prepTime: d.prepTime,
-    cookTime: d.cookTime,
-    totalTime: d.prepTime + d.cookTime,
-    ingredients: d.ingredients,
+    servingSize: d.servingSize,
+    totalTimeMin: d.totalTimeMin,
+    totalTimeText: d.totalTimeText,
     cuisine: d.cuisine,
-    mealType: d.mealType,
+    meal: d.meal,
+    mealTags: d.mealTags ?? [],
     protein: d.protein,
-    dietary: d.dietary,
+    proteinTags: d.proteinTags ?? [],
     difficulty: d.difficulty,
-    spiceLevel: d.spiceLevel,
-    season: d.season,
-    occasion: d.occasion,
+    difficultyText: d.difficultyText,
+    cost: d.cost,
+    dietary: d.dietary,
+    dietaryTags: d.dietaryTags ?? [],
+    allergens: d.allergens,
     equipment: d.equipment,
+    cookingMethod: d.cookingMethod,
+    flavor: d.flavor,
+    texture: d.texture,
+    mealPrep: d.mealPrep,
+    freezer: d.freezer,
+    storage: d.storage,
     source: d.source,
-    rating: d.rating,
-    dateAdded: d.dateAdded ? d.dateAdded.toISOString() : undefined,
-    tags: d.tags,
+    verification: d.verification,
+    nutrition: d.nutrition,
+    keywords: d.keywords ?? [],
+    ingredients: d.ingredients ?? [],
     image: d.image ? `${base}${d.image}` : undefined,
   };
 });
@@ -42,8 +52,9 @@ const recipes: RecipeData[] = entries.map((entry) => {
     <p class="hero__eyebrow">The Pantry</p>
     <h1 class="hero__title">Recipes <em>by codeword</em>.</h1>
     <p class="hero__lede">
-      A personal library of {recipes.length} recipes. Search a nickname, filter by what's in
-      the fridge and how much time you've got, and cook.
+      A personal library of {recipes.length} recipes, saved from the wild and organized by
+      hand. Search an ingredient, a flavor, or a codeword; filter by meal, protein, or how much
+      time you've got.
     </p>
   </section>
 

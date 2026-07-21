@@ -1,17 +1,27 @@
 import type { RecipeData } from '../lib/types';
-import { formatDuration, labelize } from '../lib/format';
-import RatingStars from './RatingStars';
+import { labelize } from '../lib/format';
 
 interface Props {
   recipe: RecipeData;
   href: string;
 }
 
-const SPICE_DOTS = (level: number) =>
-  '🌶'.repeat(Math.max(0, level));
+function timeLabel(r: RecipeData): string | null {
+  if (r.totalTimeMin != null) {
+    const h = Math.floor(r.totalTimeMin / 60);
+    const m = r.totalTimeMin % 60;
+    if (h === 0) return `${m} min`;
+    return m === 0 ? `${h} h` : `${h} h ${m} min`;
+  }
+  if (r.totalTimeText && !/not\s|unavailable|n\/a/i.test(r.totalTimeText)) return r.totalTimeText;
+  return null;
+}
 
 export default function RecipeCard({ recipe, href }: Props) {
   const r = recipe;
+  const time = timeLabel(r);
+  const cal = r.nutrition?.calories;
+  const cuisine = r.cuisine && r.cuisine.length <= 26 ? r.cuisine : undefined;
   return (
     <a className="card" href={href}>
       <div className={`card__media${r.image ? '' : ' card__media--empty'}`}>
@@ -27,34 +37,33 @@ export default function RecipeCard({ recipe, href }: Props) {
             </svg>
           </div>
         )}
-        <span className="codeword card__codeword">{r.codeword}</span>
+        <span className="codeword card__codeword">{r.id}</span>
+        {r.verification && (
+          <span className={`vbadge vbadge--${r.verification}`} title={`Source verification ${r.verification}`}>{r.verification}</span>
+        )}
       </div>
 
       <div className="card__body">
         <h3 className="card__title">{r.title}</h3>
 
         <div className="card__meta">
-          <span className="card__meta-item">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-            {formatDuration(r.totalTime)}
-          </span>
-          {r.cuisine && <span className="card__meta-item">{labelize(r.cuisine)}</span>}
+          {time && (
+            <span className="card__meta-item">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              {time}
+            </span>
+          )}
+          {cuisine && <span className="card__meta-item">{labelize(cuisine)}</span>}
           {r.difficulty && (
-            <span className={`card__difficulty card__difficulty--${r.difficulty}`}>{labelize(r.difficulty)}</span>
+            <span className={`card__difficulty card__difficulty--${r.difficulty.toLowerCase()}`}>{r.difficulty}</span>
           )}
         </div>
 
         <div className="card__footer">
-          {r.rating ? (
-            <RatingStars value={r.rating} />
-          ) : (
-            <span className="card__unrated">Unrated</span>
-          )}
-          {typeof r.spiceLevel === 'number' && r.spiceLevel > 0 && (
-            <span className="card__spice" aria-label={`Spice level ${r.spiceLevel} of 3`} title={`Spice ${r.spiceLevel}/3`}>
-              {SPICE_DOTS(r.spiceLevel)}
-            </span>
-          )}
+          <span className="card__protein">
+            {r.proteinTags.length ? r.proteinTags.slice(0, 2).map(labelize).join(' · ') : (r.mealTags[0] ? labelize(r.mealTags[0]) : '')}
+          </span>
+          {cal && <span className="card__cal">{cal} cal</span>}
         </div>
       </div>
     </a>

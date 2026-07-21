@@ -1,17 +1,7 @@
 import type { FilterState, RecipeData } from './types';
 
 /** Multi-value filter fields, in the order they render in the panel. */
-export const MULTI_FIELDS = [
-  'cuisine',
-  'mealType',
-  'protein',
-  'dietary',
-  'difficulty',
-  'spiceLevel',
-  'season',
-  'occasion',
-  'equipment',
-] as const;
+export const MULTI_FIELDS = ['meal', 'protein', 'dietary', 'difficulty', 'cost', 'verification'] as const;
 export type MultiField = (typeof MULTI_FIELDS)[number];
 
 export const TIME_RANGES: Array<{ value: string; label: string; max: number | null }> = [
@@ -23,63 +13,51 @@ export const TIME_RANGES: Array<{ value: string; label: string; max: number | nu
 ];
 
 export const SORTS: Array<{ value: string; label: string }> = [
-  { value: 'date', label: 'Newest' },
-  { value: 'rating', label: 'Top rated' },
-  { value: 'time', label: 'Quickest' },
+  { value: 'id', label: 'Library order' },
   { value: 'alpha', label: 'A → Z' },
+  { value: 'time', label: 'Quickest' },
 ];
 
 export const EMPTY_FILTERS: FilterState = {
   keywords: [],
-  cuisine: [],
-  mealType: [],
+  meal: [],
   protein: [],
   dietary: [],
   difficulty: [],
-  spiceLevel: [],
-  season: [],
-  occasion: [],
-  equipment: [],
+  cost: [],
+  verification: [],
   time: '',
-  sort: 'date',
+  sort: 'id',
 };
 
-/** Read filter state out of a URLSearchParams (bookmarkable/shareable). */
+const list = (params: URLSearchParams, k: string) => {
+  const v = params.get(k);
+  return v ? v.split(',').filter(Boolean) : [];
+};
+
 export function filtersFromParams(params: URLSearchParams): FilterState {
-  const list = (k: string) => {
-    const v = params.get(k);
-    return v ? v.split(',').filter(Boolean) : [];
-  };
   return {
-    keywords: list('q'),
-    cuisine: list('cuisine'),
-    mealType: list('mealType'),
-    protein: list('protein'),
-    dietary: list('dietary'),
-    difficulty: list('difficulty'),
-    spiceLevel: list('spiceLevel'),
-    season: list('season'),
-    occasion: list('occasion'),
-    equipment: list('equipment'),
+    keywords: list(params, 'q'),
+    meal: list(params, 'meal'),
+    protein: list(params, 'protein'),
+    dietary: list(params, 'dietary'),
+    difficulty: list(params, 'difficulty'),
+    cost: list(params, 'cost'),
+    verification: list(params, 'verification'),
     time: params.get('time') ?? '',
-    sort: params.get('sort') ?? 'date',
+    sort: params.get('sort') ?? 'id',
   };
 }
 
-/** Serialize filter state to a compact query string (omits defaults). */
 export function filtersToParams(f: FilterState): URLSearchParams {
   const p = new URLSearchParams();
   if (f.keywords.length) p.set('q', f.keywords.join(','));
-  for (const field of MULTI_FIELDS) {
-    const vals = f[field];
-    if (vals.length) p.set(field, vals.join(','));
-  }
+  for (const field of MULTI_FIELDS) if (f[field].length) p.set(field, f[field].join(','));
   if (f.time) p.set('time', f.time);
-  if (f.sort && f.sort !== 'date') p.set('sort', f.sort);
+  if (f.sort && f.sort !== 'id') p.set('sort', f.sort);
   return p;
 }
 
-/** Count of panel filters only (facets + time) — drives the "Filters" badge. */
 export function countActive(f: FilterState): number {
   let n = 0;
   for (const field of MULTI_FIELDS) n += f[field].length;
@@ -87,60 +65,54 @@ export function countActive(f: FilterState): number {
   return n;
 }
 
-/** Build the set of available option values (facets) present in the library. */
+/** Which recipe values back each facet field. */
+function facetValues(r: RecipeData, field: MultiField): string[] {
+  switch (field) {
+    case 'meal': return r.mealTags;
+    case 'protein': return r.proteinTags;
+    case 'dietary': return r.dietaryTags;
+    case 'difficulty': return r.difficulty ? [r.difficulty] : [];
+    case 'cost': return r.cost ? [r.cost] : [];
+    case 'verification': return r.verification ? [r.verification] : [];
+  }
+}
+
 export function buildFacets(recipes: RecipeData[]): Record<MultiField, string[]> {
-  const sets: Record<MultiField, Set<string>> = {
-    cuisine: new Set(),
-    mealType: new Set(),
-    protein: new Set(),
-    dietary: new Set(),
-    difficulty: new Set(),
-    spiceLevel: new Set(),
-    season: new Set(),
-    occasion: new Set(),
-    equipment: new Set(),
-  };
+  const sets = {} as Record<MultiField, Set<string>>;
+  for (const field of MULTI_FIELDS) sets[field] = new Set();
   for (const r of recipes) {
-    if (r.cuisine) sets.cuisine.add(r.cuisine);
-    if (r.mealType) sets.mealType.add(r.mealType);
-    if (r.protein) sets.protein.add(r.protein);
-    if (r.difficulty) sets.difficulty.add(r.difficulty);
-    if (r.spiceLevel != null) sets.spiceLevel.add(String(r.spiceLevel));
-    for (const d of r.dietary ?? []) sets.dietary.add(d);
-    for (const s of r.season ?? []) sets.season.add(s);
-    for (const o of r.occasion ?? []) sets.occasion.add(o);
-    for (const e of r.equipment ?? []) sets.equipment.add(e);
+    for (const field of MULTI_FIELDS) for (const v of facetValues(r, field)) sets[field].add(v);
   }
   const out = {} as Record<MultiField, string[]>;
   for (const field of MULTI_FIELDS) {
-    out[field] = [...sets[field]].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    const arr = [...sets[field]];
+    if (field === 'difficulty') {
+      const order = ['Easy', 'Medium', 'Hard'];
+      arr.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+    } else if (field === 'cost' || field === 'verification') {
+      arr.sort();
+    } else {
+      arr.sort((a, b) => a.localeCompare(b));
+    }
+    out[field] = arr;
   }
   return out;
 }
 
-/** Does a recipe pass all the non-text facet + time filters? (search handled separately) */
 export function matchesFacets(r: RecipeData, f: FilterState): boolean {
-  const anyOf = (selected: string[], value?: string) =>
-    selected.length === 0 || (value != null && selected.includes(value));
-  const anyOfList = (selected: string[], values?: string[]) =>
-    selected.length === 0 || (values != null && selected.some((s) => values.includes(s)));
-
-  if (!anyOf(f.cuisine, r.cuisine)) return false;
-  if (!anyOf(f.mealType, r.mealType)) return false;
-  if (!anyOf(f.protein, r.protein)) return false;
-  if (!anyOf(f.difficulty, r.difficulty)) return false;
-  if (!anyOf(f.spiceLevel, r.spiceLevel != null ? String(r.spiceLevel) : undefined)) return false;
-  if (!anyOfList(f.dietary, r.dietary)) return false;
-  if (!anyOfList(f.season, r.season)) return false;
-  if (!anyOfList(f.occasion, r.occasion)) return false;
-  if (!anyOfList(f.equipment, r.equipment)) return false;
-
+  for (const field of MULTI_FIELDS) {
+    const selected = f[field];
+    if (!selected.length) continue;
+    const values = facetValues(r, field);
+    if (!selected.some((s) => values.includes(s))) return false;
+  }
   if (f.time) {
     const range = TIME_RANGES.find((t) => t.value === f.time);
     if (range) {
+      if (r.totalTimeMin == null) return false; // unknown time can't satisfy a time filter
       if (range.max == null) {
-        if (r.totalTime < 60) return false; // 60+
-      } else if (r.totalTime >= range.max) {
+        if (r.totalTimeMin < 60) return false;
+      } else if (r.totalTimeMin >= range.max) {
         return false;
       }
     }
@@ -148,77 +120,58 @@ export function matchesFacets(r: RecipeData, f: FilterState): boolean {
   return true;
 }
 
-// ----------------------------------------------------------------------------
-// Keyword search: STRICT, word-level matching.
-// A keyword matches a recipe ONLY when it equals a whole searchable word, or is
-// the start of one ("bean" -> "beans", plus as-you-type). There is deliberately
-// NO fuzzy/typo tolerance: at scale, 1-letter fuzz makes short words collide
-// ("pasta" ~ "paste", "asian" ~ "italian"), which is exactly the noise to avoid.
-// A recipe is findable by a word only if that word actually appears in its
-// codeword, title, tags, metadata, or ingredient names.
-// ----------------------------------------------------------------------------
+export function sortRecipes(list: RecipeData[], sort: string): RecipeData[] {
+  const copy = [...list];
+  switch (sort) {
+    case 'alpha':
+      copy.sort((a, b) => a.title.localeCompare(b.title));
+      break;
+    case 'time':
+      copy.sort((a, b) => (a.totalTimeMin ?? 1e9) - (b.totalTimeMin ?? 1e9) || a.id.localeCompare(b.id));
+      break;
+    case 'id':
+    default:
+      copy.sort((a, b) => a.id.localeCompare(b.id));
+      break;
+  }
+  return copy;
+}
 
-/** All searchable words for a recipe (codeword, title, tags, metadata, ingredients). */
+// ---------------------------------------------------------------------------
+// Strict keyword search over the recipe's searchable words.
+// ---------------------------------------------------------------------------
+
 export function recipeWords(r: RecipeData): string[] {
   const out: string[] = [];
   const add = (s?: string) => {
     if (!s) return;
     for (const w of String(s).toLowerCase().split(/[^a-z0-9]+/)) if (w) out.push(w);
   };
-  add(r.codeword);
+  add(r.id);
   add(r.title);
   add(r.cuisine);
-  add(r.mealType);
+  add(r.meal);
   add(r.protein);
-  add(r.difficulty);
-  (r.tags ?? []).forEach(add);
-  (r.dietary ?? []).forEach(add);
-  (r.occasion ?? []).forEach(add);
-  (r.equipment ?? []).forEach(add);
-  (r.season ?? []).forEach(add);
+  add(r.cookingMethod);
+  add(r.equipment);
+  add(r.flavor);
+  (r.keywords ?? []).forEach(add);
+  (r.mealTags ?? []).forEach(add);
+  (r.proteinTags ?? []).forEach(add);
+  (r.dietaryTags ?? []).forEach(add);
   (r.ingredients ?? []).forEach((i) => add(i.item));
   return out;
 }
 
-/** Does a single keyword match this recipe's words? Multi-word keywords AND together. */
 export function keywordMatches(words: string[], keyword: string): boolean {
   const parts = keyword.toLowerCase().split(/\s+/).filter(Boolean);
   if (!parts.length) return true;
   return parts.every((kw) => {
-    if (kw.length < 2) return true; // too short to be meaningful — don't filter on it
+    if (kw.length < 2) return true;
     for (const w of words) {
-      if (w === kw) return true; // exact whole-word match
-      // Prefix match covers plurals ("egg"->"eggs", "bean"->"beans") and
-      // as-you-type. It is still strict: the word must START with the keyword,
-      // so "pasta" never matches "paste" and "asian" never matches "italian".
+      if (w === kw) return true;
       if (kw.length >= 3 && w.startsWith(kw)) return true;
     }
     return false;
   });
-}
-
-export function sortRecipes(list: RecipeData[], sort: string): RecipeData[] {
-  const copy = [...list];
-  switch (sort) {
-    case 'rating':
-      copy.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0) || cmpDate(b, a));
-      break;
-    case 'time':
-      copy.sort((a, b) => a.totalTime - b.totalTime || a.title.localeCompare(b.title));
-      break;
-    case 'alpha':
-      copy.sort((a, b) => a.title.localeCompare(b.title));
-      break;
-    case 'date':
-    default:
-      copy.sort((a, b) => cmpDate(b, a));
-      break;
-  }
-  return copy;
-}
-
-function cmpDate(a: RecipeData, b: RecipeData): number {
-  const ta = a.dateAdded ? Date.parse(a.dateAdded) : 0;
-  const tb = b.dateAdded ? Date.parse(b.dateAdded) : 0;
-  return ta - tb;
 }

@@ -4,61 +4,80 @@ import { glob } from 'astro/loaders';
 /**
  * RECIPE FRONTMATTER SCHEMA
  * -------------------------
- * Every recipe is a markdown file in the top-level `/recipes/` folder.
- * Its YAML frontmatter is validated against this schema AT BUILD TIME.
+ * Recipes live as markdown files in the top-level `/recipes/` folder and are
+ * validated against this schema at build time. The library was imported from
+ * Nico's master document (122 Instagram-sourced records), so most fields are
+ * optional — a record only carries what was recoverable from its source.
  *
- * If a recipe is malformed (missing a required field, wrong type, or an
- * out-of-range value), `astro build` fails with an error naming the offending
- * file and field — so a broken recipe can never ship silently.
- *
- * See README.md ("Adding a new recipe") for a copy-paste template.
+ * Required: `id` and `title`. Everything else is optional.
  */
 
-// --- Controlled vocabularies (kept as const so the UI can enumerate them) ---
-export const MEAL_TYPES = ['breakfast', 'lunch', 'dinner', 'snack', 'dessert', 'drink'] as const;
-export const DIETARY = ['vegetarian', 'vegan', 'gluten-free', 'dairy-free'] as const;
-export const DIFFICULTY = ['easy', 'medium', 'hard'] as const;
-export const SEASONS = ['spring', 'summer', 'fall', 'winter'] as const;
-export const OCCASIONS = ['weeknight', 'meal-prep', 'date-night', 'party', 'holiday'] as const;
-export const EQUIPMENT = ['oven', 'stovetop', 'blender', 'grill', 'instant-pot', 'no-cook', 'microwave', 'air-fryer'] as const;
-
-/** A single ingredient line. `amount` is a number so it can be scaled. */
 const ingredientSchema = z.object({
-  amount: z.number().nonnegative().optional(),
+  amount: z.number().optional(),
   unit: z.string().optional(),
-  item: z.string().min(1, 'ingredient "item" cannot be empty'),
+  item: z.string().min(1),
   note: z.string().optional(),
 });
 
+const nutritionSchema = z
+  .object({
+    serving: z.string().optional(),
+    calories: z.string().optional(),
+    protein: z.string().optional(),
+    carbs: z.string().optional(),
+    fat: z.string().optional(),
+    fiber: z.string().optional(),
+    sugar: z.string().optional(),
+    sodium: z.string().optional(),
+    status: z.string().optional(),
+  })
+  .optional();
+
 const recipes = defineCollection({
-  // Load markdown from the project-root /recipes folder.
-  // Drop a new *.md file in there and rebuild — that's the whole workflow.
   loader: glob({ pattern: '**/*.md', base: './recipes' }),
   schema: z.object({
-    // --- Required ---
+    // --- Identity ---
+    id: z.string().min(1), // stable internal ID, e.g. "R0001"
+    codeword: z.string().optional(), // set to the ID; the searchable handle
     title: z.string().min(1),
-    /** Short unique personal nickname — the primary way you search for a recipe. */
-    codeword: z.string().min(1),
-    servings: z.number().int().positive(),
-    prepTime: z.number().int().nonnegative(), // minutes
-    cookTime: z.number().int().nonnegative(), // minutes
-    ingredients: z.array(ingredientSchema).min(1, 'a recipe needs at least one ingredient'),
+    description: z.string().optional(),
 
-    // --- Optional metadata (all filterable) ---
+    // --- Practical ---
+    servings: z.number().optional(),
+    servingSize: z.string().optional(),
+    totalTimeMin: z.number().optional(), // parsed minutes, when known (drives time filter)
+    totalTimeText: z.string().optional(), // original wording, e.g. "About 20 min"
+
+    // --- Classification (free text from source) + normalized facet tags ---
     cuisine: z.string().optional(),
-    mealType: z.enum(MEAL_TYPES).optional(),
+    meal: z.string().optional(),
+    mealTags: z.array(z.string()).optional(),
     protein: z.string().optional(),
-    dietary: z.array(z.enum(DIETARY)).optional(),
-    difficulty: z.enum(DIFFICULTY).optional(),
-    spiceLevel: z.number().int().min(0).max(3).optional(),
-    season: z.array(z.enum(SEASONS)).optional(),
-    occasion: z.array(z.enum(OCCASIONS)).optional(),
-    equipment: z.array(z.enum(EQUIPMENT)).optional(),
-    source: z.string().optional(),
-    rating: z.number().int().min(1).max(5).optional(),
-    dateAdded: z.coerce.date().optional(),
-    tags: z.array(z.string()).optional(),
-    /** Path relative to /public, e.g. "/images/tacos.jpg". */
+    proteinTags: z.array(z.string()).optional(),
+    difficulty: z.string().optional(),
+    difficultyText: z.string().optional(),
+    cost: z.string().optional(),
+    dietary: z.string().optional(),
+    dietaryTags: z.array(z.string()).optional(),
+    allergens: z.string().optional(),
+    equipment: z.string().optional(),
+    cookingMethod: z.string().optional(),
+    flavor: z.string().optional(),
+    texture: z.string().optional(),
+    mealPrep: z.string().optional(),
+    freezer: z.string().optional(),
+    storage: z.string().optional(),
+
+    // --- Provenance ---
+    source: z.string().optional(), // original Instagram reel URL
+    verification: z.string().optional(), // A / B / C / D
+
+    // --- Nutrition ---
+    nutrition: nutritionSchema,
+
+    // --- Search + content ---
+    keywords: z.array(z.string()).optional(),
+    ingredients: z.array(ingredientSchema).optional(),
     image: z.string().optional(),
   }),
 });

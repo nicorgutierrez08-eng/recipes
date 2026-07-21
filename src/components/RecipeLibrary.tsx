@@ -25,26 +25,24 @@ interface Props {
 
 /** Human labels for each filter group. */
 const FIELD_LABEL: Record<MultiField, string> = {
-  cuisine: 'Cuisine',
-  mealType: 'Meal',
+  meal: 'Meal',
   protein: 'Protein',
   dietary: 'Dietary',
   difficulty: 'Difficulty',
-  spiceLevel: 'Spice',
-  season: 'Season',
-  occasion: 'Occasion',
-  equipment: 'Equipment',
+  cost: 'Cost',
+  verification: 'Source level',
 };
 
-const SPICE_LABEL: Record<string, string> = {
-  '0': 'No heat',
-  '1': 'Mild',
-  '2': 'Medium',
-  '3': 'Hot',
+const VERIFICATION_LABEL: Record<string, string> = {
+  A: 'A · cookable',
+  B: 'B · mostly there',
+  C: 'C · outline',
+  D: 'D · needs caption',
 };
 
 function optionLabel(field: MultiField, value: string): string {
-  if (field === 'spiceLevel') return SPICE_LABEL[value] ?? value;
+  if (field === 'verification') return VERIFICATION_LABEL[value] ?? value;
+  if (field === 'cost') return value;
   return labelize(value);
 }
 

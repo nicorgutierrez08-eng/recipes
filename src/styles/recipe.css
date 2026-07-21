@@ -350,3 +350,52 @@
   .step:not(:last-child)::after { left: 1.1rem; }
   .step__text { font-size: 1.1rem; }
 }
+
+/* ---------------- Imported-data additions ---------------- */
+.recipe__header--solo { display: block; }
+.recipe__eyebrow { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.9rem; flex-wrap: wrap; }
+.recipe__codeword { margin-bottom: 0; }
+.recipe__desc { margin: 1rem 0 0; max-width: 60ch; color: var(--ink-soft); font-size: 1.1rem; line-height: 1.5; }
+
+/* verification badge */
+.vbadge {
+  display: inline-grid; place-items: center;
+  min-width: 1.4rem; height: 1.4rem; padding: 0 0.5rem;
+  border-radius: 999px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em;
+  color: #fff;
+}
+.vbadge--A { background: #4d7c4d; }
+.vbadge--B { background: #b8863b; }
+.vbadge--C { background: #b06a3c; }
+.vbadge--D { background: #9a9088; }
+
+.recipe__source { margin-top: 1.25rem; font-size: 0.9rem; }
+.recipe__source a { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--paprika-deep); text-decoration: none; font-weight: 550; }
+.recipe__source a:hover { text-decoration: underline; }
+
+/* metadata rows (single value) */
+.metatags__value { color: var(--ink); font-size: 0.95rem; }
+
+/* nutrition panel */
+.nutrition {
+  margin-top: 1.25rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 1.1rem 1.25rem 1.25rem;
+  box-shadow: var(--shadow-card);
+}
+.nutrition__title { font-size: 1.15rem; }
+.nutrition__serving { color: var(--ink-faint); font-weight: 400; font-size: 0.85rem; font-family: var(--font-ui); }
+.nutrition__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(72px, 1fr)); gap: 0.6rem; margin-top: 0.85rem; }
+.nutrition__cell {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  background: var(--paper-raised); border-radius: var(--r-md); padding: 0.55rem 0.4rem;
+}
+.nutrition__cell--cal { background: var(--paprika-wash); }
+.nutrition__num { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--ink); }
+.nutrition__lab { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); margin-top: 0.15rem; }
+.nutrition__status { margin: 0.75rem 0 0; font-size: 0.78rem; color: var(--ink-faint); font-style: italic; }
+
+.recipe__aside { display: flex; flex-direction: column; gap: 1.25rem; }
