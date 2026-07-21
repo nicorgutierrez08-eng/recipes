@@ -1,0 +1,167 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import IngredientsPanel from '../components/IngredientsPanel.tsx';
+import RatingStars from '../components/RatingStars.tsx';
+import { formatDuration, formatDate, labelize } from '../lib/format';
+import '../styles/recipe.css';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('recipes');
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const totalTime = d.prepTime + d.cookTime;
+const image = d.image ? `${base}${d.image}` : undefined;
+const isUrl = d.source ? /^https?:\/\//i.test(d.source) : false;
+
+// --- Split the markdown body into numbered steps (and pull out any > notes) ---
+function inlineMd(s: string): string {
+  let out = s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+  out = out.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  out = out.replace(/`(.+?)`/g, '<code>$1</code>');
+  out = out.replace(/(^|[^*])\*(?!\s)(.+?)\*/g, '$1<em>$2</em>');
+  return out;
+}
+
+const blocks = entry.body
+  .split(/\n\s*\n/)
+  .map((b) => b.trim())
+  .filter(Boolean);
+
+const steps: string[] = [];
+const notes: string[] = [];
+for (const b of blocks) {
+  if (b.startsWith('>')) {
+    notes.push(inlineMd(b.replace(/^>\s?/gm, '').replace(/\n/g, ' ').trim()));
+  } else {
+    steps.push(inlineMd(b.replace(/\n/g, ' ').trim()));
+  }
+}
+
+// --- Metadata "facts" and tag groups for the header ---
+const facts = [
+  { label: 'Prep', value: formatDuration(d.prepTime) },
+  { label: 'Cook', value: formatDuration(d.cookTime) },
+  { label: 'Total', value: formatDuration(totalTime) },
+  { label: 'Serves', value: String(d.servings) },
+];
+
+const tagGroups: Array<{ label: string; values: string[]; kind: string }> = [];
+if (d.dietary?.length) tagGroups.push({ label: 'Dietary', values: d.dietary, kind: 'diet' });
+if (d.season?.length) tagGroups.push({ label: 'Season', values: d.season, kind: 'season' });
+if (d.occasion?.length) tagGroups.push({ label: 'Occasion', values: d.occasion, kind: 'occasion' });
+if (d.equipment?.length) tagGroups.push({ label: 'Equipment', values: d.equipment, kind: 'equipment' });
+if (d.tags?.length) tagGroups.push({ label: 'Tags', values: d.tags, kind: 'tag' });
+
+const spiceLabels = ['No heat', 'Mild', 'Medium', 'Hot'];
+---
+
+<Base title={`${d.title} — The Pantry`} description={`${d.title} (${d.codeword})`}>
+  <article class="recipe">
+    <div class="container recipe__inner">
+      <a id="back-link" class="back-link" href={`${base}/`}>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        Back to the library
+      </a>
+
+      <header class="recipe__header">
+        <div class="recipe__headtext">
+          <span class="codeword recipe__codeword">{d.codeword}</span>
+          <h1 class="recipe__title">{d.title}</h1>
+
+          <div class="recipe__topline">
+            {d.rating && (
+              <span class="recipe__rating"><RatingStars value={d.rating} size={18} /></span>
+            )}
+            {d.cuisine && <span class="recipe__tagline">{labelize(d.cuisine)}</span>}
+            {d.mealType && <span class="recipe__tagline">{labelize(d.mealType)}</span>}
+            {d.difficulty && <span class={`pill pill--${d.difficulty}`}>{labelize(d.difficulty)}</span>}
+            {typeof d.spiceLevel === 'number' && (
+              <span class="recipe__tagline">{spiceLabels[d.spiceLevel]}{d.spiceLevel > 0 ? ` ${'🌶'.repeat(d.spiceLevel)}` : ''}</span>
+            )}
+          </div>
+
+          <dl class="facts">
+            {facts.map((f) => (
+              <div class="facts__item">
+                <dt>{f.label}</dt>
+                <dd>{f.value}</dd>
+              </div>
+            ))}
+            {d.protein && d.protein !== 'none' && (
+              <div class="facts__item"><dt>Protein</dt><dd>{labelize(d.protein)}</dd></div>
+            )}
+          </dl>
+        </div>
+
+        {image && (
+          <div class="recipe__media">
+            <img src={image} alt={d.title} width="800" height="600" />
+          </div>
+        )}
+      </header>
+
+      {tagGroups.length > 0 && (
+        <div class="metatags">
+          {tagGroups.map((g) => (
+            <div class="metatags__row">
+              <span class="metatags__label">{g.label}</span>
+              <span class="metatags__values">
+                {g.values.map((v) => <span class={`tag tag--${g.kind}`}>{labelize(v)}</span>)}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {d.source && (
+        <p class="recipe__source">
+          Source: {isUrl ? <a href={d.source} rel="noopener noreferrer">{d.source}</a> : <span>{d.source}</span>}
+          {d.dateAdded && <span class="recipe__added"> · added {formatDate(d.dateAdded.toISOString())}</span>}
+        </p>
+      )}
+
+      <hr class="perforation recipe__rule" />
+
+      <div class="recipe__cols">
+        <aside class="recipe__aside">
+          <IngredientsPanel client:load ingredients={d.ingredients} baseServings={d.servings} />
+        </aside>
+
+        <section class="method">
+          <h2 class="section-title">Method</h2>
+          <ol class="steps">
+            {steps.map((s) => (
+              <li class="step"><div class="step__text" set:html={s} /></li>
+            ))}
+          </ol>
+
+          {notes.length > 0 && (
+            <div class="notes">
+              {notes.map((n) => (
+                <p class="note" set:html={n} />
+              ))}
+            </div>
+          )}
+        </section>
+      </div>
+    </div>
+  </article>
+
+  <script define:vars={{ base }}>
+    // Restore the library's previous filter state on the back link (URL-encoded in ?from=)
+    const params = new URLSearchParams(window.location.search);
+    const from = params.get('from');
+    if (from) {
+      const link = document.getElementById('back-link');
+      if (link) link.setAttribute('href', `${base}/?${from}`);
+    }
+  </script>
+</Base>

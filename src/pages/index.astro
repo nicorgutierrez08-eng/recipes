@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import RecipeLibrary from '../components/RecipeLibrary.tsx';
+import type { RecipeData } from '../lib/types';
+import '../styles/library.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const entries = await getCollection('recipes');
+
+const recipes: RecipeData[] = entries.map((entry) => {
+  const d = entry.data;
+  return {
+    slug: entry.id,
+    title: d.title,
+    codeword: d.codeword,
+    servings: d.servings,
+    prepTime: d.prepTime,
+    cookTime: d.cookTime,
+    totalTime: d.prepTime + d.cookTime,
+    ingredients: d.ingredients,
+    cuisine: d.cuisine,
+    mealType: d.mealType,
+    protein: d.protein,
+    dietary: d.dietary,
+    difficulty: d.difficulty,
+    spiceLevel: d.spiceLevel,
+    season: d.season,
+    occasion: d.occasion,
+    equipment: d.equipment,
+    source: d.source,
+    rating: d.rating,
+    dateAdded: d.dateAdded ? d.dateAdded.toISOString() : undefined,
+    tags: d.tags,
+    image: d.image ? `${base}${d.image}` : undefined,
+  };
+});
+---
+
+<Base title="The Pantry — my recipe library">
+  <section class="hero container">
+    <p class="hero__eyebrow">The Pantry</p>
+    <h1 class="hero__title">Everything I cook, <em>by codeword</em>.</h1>
+    <p class="hero__lede">
+      A personal library of {recipes.length} recipes. Search a nickname, filter by what's in
+      the fridge and how much time you've got, and cook.
+    </p>
+  </section>
+
+  <div class="container">
+    <RecipeLibrary client:load recipes={recipes} base={base} />
+  </div>
+</Base>

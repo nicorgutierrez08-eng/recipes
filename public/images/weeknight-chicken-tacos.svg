@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Illustration of two tacos">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F6D9A8"/>
+      <stop offset="1" stop-color="#E9B872"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <g transform="translate(0,40)">
+    <!-- taco shell 1 -->
+    <path d="M120 430 Q260 250 400 430 Z" fill="#F2C879"/>
+    <path d="M120 430 Q260 250 400 430" fill="none" stroke="#C88A3A" stroke-width="10"/>
+    <path d="M150 415 Q260 300 370 415 Z" fill="#7FA04A"/>
+    <circle cx="220" cy="392" r="20" fill="#C4623C"/>
+    <circle cx="290" cy="400" r="22" fill="#B24A2E"/>
+    <circle cx="260" cy="378" r="16" fill="#E7B04A"/>
+    <path d="M200 405 q30 -25 60 0 q30 -25 60 0" fill="none" stroke="#F4EAD2" stroke-width="9" stroke-linecap="round"/>
+    <!-- taco shell 2 -->
+    <path d="M400 460 Q540 280 680 460 Z" fill="#F2C879"/>
+    <path d="M400 460 Q540 280 680 460" fill="none" stroke="#C88A3A" stroke-width="10"/>
+    <path d="M430 445 Q540 330 650 445 Z" fill="#7FA04A"/>
+    <circle cx="500" cy="422" r="20" fill="#C4623C"/>
+    <circle cx="570" cy="430" r="22" fill="#B24A2E"/>
+    <circle cx="540" cy="408" r="16" fill="#E7B04A"/>
+    <path d="M480 435 q30 -25 60 0 q30 -25 60 0" fill="none" stroke="#F4EAD2" stroke-width="9" stroke-linecap="round"/>
+    <!-- lime -->
+    <circle cx="120" cy="470" r="34" fill="#8FB04A"/>
+    <circle cx="120" cy="470" r="24" fill="#C7DE94"/>
+    <path d="M120 470 L120 448 M120 470 L138 458 M120 470 L138 482 M120 470 L120 492 M120 470 L102 482 M120 470 L102 458" stroke="#8FB04A" stroke-width="4"/>
+  </g>
+</svg>

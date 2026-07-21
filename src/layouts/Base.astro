@@ -1,0 +1,112 @@
+---
+import '@fontsource-variable/fraunces';
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'A personal recipe library — warm, searchable, and always at hand.' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#c4623c" />
+    <title>{title}</title>
+    <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="brand" href={`${base}/`} aria-label="The Pantry — home">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 3v7a3 3 0 0 0 6 0V3" />
+              <path d="M9 10v11" />
+              <path d="M17 3c-1.5 0-2.5 2-2.5 5.5S15.5 14 17 14s2.5-2 2.5-5.5S18.5 3 17 3Z" />
+              <path d="M17 14v7" />
+            </svg>
+          </span>
+          <span class="brand__text">The&nbsp;Pantry</span>
+        </a>
+        <p class="brand__tag">a personal recipe library</p>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <hr class="perforation" />
+        <p>Kept by hand · built as a static cookbook · drop a markdown file in <code>/recipes</code> to add one.</p>
+      </div>
+    </footer>
+
+    <style>
+      .site-header {
+        border-bottom: 1px solid var(--line);
+        background: color-mix(in srgb, var(--paper) 82%, transparent);
+        backdrop-filter: saturate(1.1) blur(6px);
+        position: sticky;
+        top: 0;
+        z-index: 40;
+      }
+      .site-header__inner {
+        display: flex;
+        align-items: baseline;
+        gap: 1rem;
+        padding-block: 0.85rem;
+        flex-wrap: wrap;
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        text-decoration: none;
+        color: var(--ink);
+      }
+      .brand__mark {
+        color: var(--paprika);
+        display: inline-flex;
+      }
+      .brand__text {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+      .brand__tag {
+        margin: 0;
+        color: var(--ink-faint);
+        font-size: 0.85rem;
+        font-style: italic;
+        font-family: var(--font-display);
+      }
+      .site-footer {
+        margin-top: 4rem;
+        padding-block: 1.5rem 3rem;
+        color: var(--ink-faint);
+        font-size: 0.85rem;
+      }
+      .site-footer .perforation { margin-bottom: 1.25rem; }
+      .site-footer code {
+        background: var(--paper-raised);
+        padding: 0.1em 0.4em;
+        border-radius: 4px;
+        font-size: 0.85em;
+      }
+      @media (max-width: 520px) {
+        .brand__tag { flex-basis: 100%; }
+      }
+    </style>
+  </body>
+</html>

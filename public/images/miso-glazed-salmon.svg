@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Illustration of a glazed salmon fillet on a plate">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EAD9C4"/>
+      <stop offset="1" stop-color="#CBB79A"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg3)"/>
+  <!-- plate -->
+  <ellipse cx="400" cy="330" rx="270" ry="170" fill="#F4EEE3"/>
+  <ellipse cx="400" cy="330" rx="215" ry="130" fill="#EAE1D1"/>
+  <!-- salmon fillet -->
+  <path d="M250 330 q30 -70 150 -70 q120 0 150 70 q-30 70 -150 70 q-120 0 -150 -70 Z" fill="#D9713F"/>
+  <path d="M250 330 q30 -70 150 -70 q120 0 150 70 q-30 70 -150 70 q-120 0 -150 -70 Z" fill="none" stroke="#8A3B22" stroke-width="8"/>
+  <!-- glaze sheen lines -->
+  <g stroke="#E7A559" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.85">
+    <path d="M300 320 q100 -30 200 0"/>
+    <path d="M300 345 q100 -30 200 0"/>
+  </g>
+  <!-- scallion + sesame -->
+  <rect x="330" y="300" width="46" height="8" rx="4" fill="#6B7248" transform="rotate(-12 353 304)"/>
+  <rect x="410" y="345" width="46" height="8" rx="4" fill="#7FA04A" transform="rotate(8 433 349)"/>
+  <g fill="#F3E7C7">
+    <circle cx="360" cy="330" r="4"/><circle cx="400" cy="318" r="4"/>
+    <circle cx="440" cy="336" r="4"/><circle cx="420" cy="352" r="4"/>
+  </g>
+</svg>
