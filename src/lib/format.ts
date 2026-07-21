@@ -1,5 +1,32 @@
 /** Human formatting helpers: fractions, times, titles. */
 
+/**
+ * Parse a user-typed amount into a number.
+ * Accepts decimals ("1.5"), fractions ("3/4"), and mixed numbers ("1 1/2").
+ * Returns NaN if it can't be parsed.
+ */
+export function parseAmount(input: string): number {
+  const s = input.trim();
+  if (!s) return NaN;
+  const mixed = s.match(/^(\d+)\s+(\d+)\s*\/\s*(\d+)$/);
+  if (mixed) {
+    const d = Number(mixed[3]);
+    return d ? Number(mixed[1]) + Number(mixed[2]) / d : NaN;
+  }
+  const frac = s.match(/^(\d+)\s*\/\s*(\d+)$/);
+  if (frac) {
+    const d = Number(frac[2]);
+    return d ? Number(frac[1]) / d : NaN;
+  }
+  const f = Number(s);
+  return Number.isFinite(f) ? f : NaN;
+}
+
+/** Round to at most 2 decimals and drop trailing zeros: 0.6667 -> "0.67", 2 -> "2". */
+export function toDecimalString(value: number): string {
+  return String(Math.round(value * 100) / 100);
+}
+
 // Common cooking fractions we snap to, so scaled amounts read naturally
 // (1 1/2, 3/4, 2/3) instead of 1.5000001 or 0.6666667.
 const FRACTIONS: Array<[number, string]> = [
