@@ -132,7 +132,20 @@ npm run preview    # serves the built site
 
 ## 🚀 Publish your changes
 
-The site auto-deploys whenever the **`main`** branch updates.
+The site is already live and auto-deploys on every push. Watch progress in the
+repo's **Actions** tab; your live site updates a minute or two after the green ✓:
+
+**https://nicorgutierrez08-eng.github.io/recipes/**
+
+### The easiest way (no terminal) — edit on GitHub.com
+
+1. Go to the **`recipes/`** folder on GitHub: https://github.com/nicorgutierrez08-eng/recipes/tree/main/recipes
+2. To **add** a recipe, click **Add file → Create new file**, name it `something.md`,
+   and paste the template. To **edit** one, open it and click the ✏️ pencil.
+3. Scroll down, click the green **Commit changes** button. That's the "save + publish."
+4. The site rebuilds automatically.
+
+### Or from the terminal
 
 ```bash
 git add .
@@ -140,13 +153,14 @@ git commit -m "Add lentil curry"
 git push
 ```
 
-Once you push to `main`, GitHub builds and publishes automatically (watch it in
-the repo's **Actions** tab). Your live site updates in a minute or two at:
-
-**https://nicorgutierrez08-eng.github.io/recipes/**
-
-> First time only: enable Pages once (**Settings → Pages → Source: “GitHub
-> Actions”**). After that you never touch it again.
+> **One-time setup note (already done for you):** Pages is enabled with the
+> **GitHub Actions** source, and the site currently publishes from the
+> `claude/recipe-library-site-y0b77e` branch (the one GitHub's Pages
+> "environment" was locked to when it was first switched on).
+>
+> **To publish from `main` instead** (optional, cleaner): go to **Settings →
+> Environments → `github-pages` → "Deployment branches and tags"** and switch it
+> to **"No restriction"**. After that, plain pushes to `main` publish too.
 
 ---
 
