@@ -149,10 +149,13 @@ export function matchesFacets(r: RecipeData, f: FilterState): boolean {
 }
 
 // ----------------------------------------------------------------------------
-// Keyword search: precise, word-level matching (not loose substring fuzz).
-// A keyword hits a recipe only when it equals a whole searchable word, is a
-// prefix of one (for as-you-type), or is a tiny typo away from one — so
-// "asian" never leaks into "italian"/"american".
+// Keyword search: STRICT, word-level matching.
+// A keyword matches a recipe ONLY when it equals a whole searchable word, or is
+// the start of one ("bean" -> "beans", plus as-you-type). There is deliberately
+// NO fuzzy/typo tolerance: at scale, 1-letter fuzz makes short words collide
+// ("pasta" ~ "paste", "asian" ~ "italian"), which is exactly the noise to avoid.
+// A recipe is findable by a word only if that word actually appears in its
+// codeword, title, tags, metadata, or ingredient names.
 // ----------------------------------------------------------------------------
 
 /** All searchable words for a recipe (codeword, title, tags, metadata, ingredients). */
@@ -177,37 +180,18 @@ export function recipeWords(r: RecipeData): string[] {
   return out;
 }
 
-/** Bounded Levenshtein distance (early-exits once it exceeds `max`). */
-function editDistance(a: string, b: string, max: number): number {
-  if (Math.abs(a.length - b.length) > max) return max + 1;
-  const prev = new Array(b.length + 1);
-  const cur = new Array(b.length + 1);
-  for (let j = 0; j <= b.length; j++) prev[j] = j;
-  for (let i = 1; i <= a.length; i++) {
-    cur[0] = i;
-    let rowMin = cur[0];
-    for (let j = 1; j <= b.length; j++) {
-      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-      cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + cost);
-      if (cur[j] < rowMin) rowMin = cur[j];
-    }
-    if (rowMin > max) return max + 1;
-    for (let j = 0; j <= b.length; j++) prev[j] = cur[j];
-  }
-  return prev[b.length];
-}
-
 /** Does a single keyword match this recipe's words? Multi-word keywords AND together. */
 export function keywordMatches(words: string[], keyword: string): boolean {
   const parts = keyword.toLowerCase().split(/\s+/).filter(Boolean);
   if (!parts.length) return true;
   return parts.every((kw) => {
     if (kw.length < 2) return true; // too short to be meaningful — don't filter on it
-    const maxEdit = kw.length <= 4 ? 1 : 2;
     for (const w of words) {
-      if (w === kw) return true;
-      if (kw.length >= 3 && w.startsWith(kw)) return true; // as-you-type prefix
-      if (editDistance(w, kw, maxEdit) <= maxEdit) return true; // forgive small typos
+      if (w === kw) return true; // exact whole-word match
+      // Prefix match covers plurals ("egg"->"eggs", "bean"->"beans") and
+      // as-you-type. It is still strict: the word must START with the keyword,
+      // so "pasta" never matches "paste" and "asian" never matches "italian".
+      if (kw.length >= 3 && w.startsWith(kw)) return true;
     }
     return false;
   });
