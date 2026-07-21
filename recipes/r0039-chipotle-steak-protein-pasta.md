@@ -44,5 +44,6 @@ source: "https://www.instagram.com/reel/DIPP4gNvfWd/"
 verification: "A"
 nutrition: {"serving": "1 of 10 servings", "calories": "550", "protein": "60 g", "carbs": "49 g", "fat": "10 g"}
 keywords: ["batch cooking", "cheesy", "chipotle steak pasta", "cottage cheese sauce", "creamy", "creamy pasta", "dinner", "hearty", "high protein", "high-protein", "intermediate", "large-batch meal prep", "lean steak", "lunch", "meal prep", "mexican-inspired", "protein pasta", "smoky", "spicy", "steak", "tender"]
+tags: ["blender", "gluten-free", "high-protein", "meal-prep", "spicy"]
 ---
 

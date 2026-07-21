@@ -30,5 +30,6 @@ mealPrep: ": Shape ahead; cook fresh (inferred)FREEZER SUITABILITY: Not establis
 source: "https://www.instagram.com/reel/DT7K3iRk72Y/"
 nutrition: {"calories": "Unavailable"}
 keywords: ["asian-inspired fusion", "garlicky", "lunch", "snack", "soy", "unknown", "with certified tamari"]
+tags: ["air-fryer", "budget", "dairy-free", "freezer-friendly", "gluten-free", "high-protein", "kid-friendly", "low-carb", "sweet", "vegan", "vegetarian"]
 ---
 

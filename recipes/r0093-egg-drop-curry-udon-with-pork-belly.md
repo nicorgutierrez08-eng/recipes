@@ -34,5 +34,8 @@ source: "https://www.instagram.com/reel/DYzuCl1g-9H/"
 verification: "B"
 nutrition: {"serving": ""}
 keywords: ["chewy noodles", "comfort food", "curry roux", "curry-dashi broth", "curry-rich", "dinner", "egg", "intermediate", "japanese", "japanese curry roux", "mirin", "pork belly", "savory", "silky broth", "slightly sweet", "soy sauce", "tender pork", "udon noodles", "umami"]
+workingNutrition: {"calories": "~1380", "protein": "29 g", "carbs": "74 g", "fat": "104 g", "basis": "per serving"}
+nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
+tags: ["quick", "sweet"]
 ---
 

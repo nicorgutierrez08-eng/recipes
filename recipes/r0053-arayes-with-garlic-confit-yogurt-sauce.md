@@ -31,5 +31,8 @@ freezer: "Stuffed uncooked pitas may freeze; not creator-stated"
 source: "https://www.instagram.com/reel/DVWk8vGAf0u/"
 verification: "B"
 keywords: ["allspice", "arayes", "aromatic", "black pepper", "chili oil", "cinnamon", "coriander", "creamy sauce", "crisp pita", "cumin", "dinner", "garlic", "garlic confit", "garlicky", "greek yogurt", "greek yogurt sauce", "ground beef", "ground beef or lamb", "ground lamb", "intermediate", "juicy meat", "lunch", "middle eastern", "middle eastern inspired", "mozzarella (optional)", "olive oil", "onion", "optional mozzarella", "paprika", "parsley", "pita bread", "savory", "sesame", "shallots", "stuffed pita", "tomato paste", "warm-spiced"]
+workingNutrition: {"calories": "~850", "protein": "40 g", "carbs": "40 g", "fat": "58 g", "basis": "per serving"}
+nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
+tags: ["freezer-friendly", "high-protein", "spicy"]
 ---
 

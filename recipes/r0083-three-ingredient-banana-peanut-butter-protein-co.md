@@ -32,5 +32,6 @@ source: "https://www.instagram.com/reel/DOGa_6mE31G/"
 verification: "B"
 nutrition: {"serving": "1 cookie", "calories": "173", "fat": "10 g", "carbs": "7 g", "protein": "13 g"}
 keywords: ["banana", "banana only", "dessert", "high-protein", "peanut butter", "powder may be sweetened", "protein powder", "snack", "soft", "three-ingredient", "vanilla"]
+tags: ["5-ingredient", "budget", "high-protein", "low-calorie", "sweet"]
 ---
 

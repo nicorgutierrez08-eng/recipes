@@ -31,5 +31,8 @@ cookingMethod: "Pan-steam + fry"
 source: "https://www.instagram.com/reel/DZB5mYyNme3/"
 verification: "B"
 keywords: ["appetizer", "intermediate", "snack"]
+workingNutrition: {"calories": "~180", "protein": "6 g", "carbs": "21 g", "fat": "10 g", "basis": "per serving"}
+nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
+tags: ["low-calorie", "quick"]
 ---
 

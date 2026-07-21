@@ -44,5 +44,6 @@ source: "https://www.instagram.com/reel/DVcjGyWkYkH/"
 verification: "B"
 nutrition: {"calories": "245", "fat": "2 g", "carbs": "3 g", "protein": "59 g"}
 keywords: ["59g protein", "airy", "breakfast", "chocolate if chips added", "cloud bread", "cloud-like", "cornstarch", "dessert", "egg whites", "flourless", "flourless bread", "high-protein", "honey", "lightly sweet", "low carb", "mild", "snack", "soft"]
+tags: ["5-ingredient", "high-protein", "low-calorie", "low-carb", "sweet"]
 ---
 

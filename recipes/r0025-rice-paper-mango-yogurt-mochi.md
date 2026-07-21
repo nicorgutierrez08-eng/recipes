@@ -45,5 +45,6 @@ source: "https://www.instagram.com/reel/DUS4og-EUzb/"
 verification: "A"
 nutrition: {"serving": "1 of 3 pieces", "calories": "About 117", "protein": "About 4 g", "carbs": "About 25 g", "fat": "Less than 1 g", "fiber": "About 1 g", "sugar": "About 16 g", "sodium": "About 15 mg"}
 keywords: ["chewy", "creamy", "dessert", "easy", "fruit snack", "gluten free option", "gluten-free if certified", "greek yogurt", "honeyed", "juicy", "mango", "mochi style", "no bake", "no-bake fruit snack", "rice paper", "snack", "tangy", "vegetarian"]
+tags: ["5-ingredient", "budget", "gluten-free", "low-calorie", "no-bake", "quick", "sweet", "vegetarian"]
 ---
 

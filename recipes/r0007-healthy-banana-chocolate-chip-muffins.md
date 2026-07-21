@@ -44,5 +44,6 @@ source: "https://www.instagram.com/reel/DRfIAzXEReV/"
 verification: "B"
 nutrition: {"serving": "1 muffin"}
 keywords: ["american baking", "banana", "banana muffins", "breakfast", "breakfast prep", "chocolate", "chocolate chip", "easy", "easy baking", "eggs", "fluffy", "freezer friendly", "moist", "no refined sugar", "no refined sugar stated", "snack", "whole-food-style"]
+tags: ["budget", "freezer-friendly", "low-calorie", "sweet"]
 ---
 

@@ -42,5 +42,6 @@ mealPrep: ": Low; designed freshFREEZER SUITABILITY: Not establishedLEFTOVER QUA
 source: "https://www.instagram.com/reel/DUvamt-EoJ1/"
 nutrition: {"calories": "Unavailable", "protein": "35 g"}
 keywords: ["coconut", "dessert", "milk", "snack"]
+tags: ["budget", "dairy-free", "freezer-friendly", "gluten-free", "high-protein", "kid-friendly", "low-calorie", "low-carb", "quick", "sweet", "vegetarian"]
 ---
 

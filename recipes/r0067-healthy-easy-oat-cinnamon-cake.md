@@ -29,5 +29,6 @@ mealPrep: ": Good (inferred)FREEZER SUITABILITY: Likely (inferred)LEFTOVER QUALI
 source: "https://www.instagram.com/reel/DTYkqRdjYYb/"
 nutrition: {"calories": "Unavailable"}
 keywords: ["breakfast", "cinnamon", "contemporary home baking", "dessert", "milk", "oats", "snack"]
+tags: ["budget", "dairy-free", "freezer-friendly", "gluten-free", "high-protein", "kid-friendly", "low-carb", "sweet", "vegetarian"]
 ---
 

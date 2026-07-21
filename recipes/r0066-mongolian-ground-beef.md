@@ -42,5 +42,6 @@ mealPrep: ": Likely goodFREEZER SUITABILITY: Likely good; not creator-statedLEFT
 source: "https://www.instagram.com/reel/DTJArUSkpfN/"
 nutrition: {"calories": "Unavailable"}
 keywords: ["dinner", "gingery", "savory", "wheat"]
+tags: ["budget", "dairy-free", "freezer-friendly", "gluten-free", "high-protein", "kid-friendly", "low-calorie", "low-carb", "spicy", "sweet", "vegan", "vegetarian"]
 ---
 

@@ -1,7 +1,7 @@
 import type { FilterState, RecipeData } from './types';
 
 /** Multi-value filter fields, in the order they render in the panel. */
-export const MULTI_FIELDS = ['meal', 'protein', 'dietary', 'difficulty', 'cost', 'verification'] as const;
+export const MULTI_FIELDS = ['meal', 'protein', 'tags', 'difficulty', 'cost', 'verification'] as const;
 export type MultiField = (typeof MULTI_FIELDS)[number];
 
 export const TIME_RANGES: Array<{ value: string; label: string; max: number | null }> = [
@@ -22,7 +22,7 @@ export const EMPTY_FILTERS: FilterState = {
   keywords: [],
   meal: [],
   protein: [],
-  dietary: [],
+  tags: [],
   difficulty: [],
   cost: [],
   verification: [],
@@ -40,7 +40,7 @@ export function filtersFromParams(params: URLSearchParams): FilterState {
     keywords: list(params, 'q'),
     meal: list(params, 'meal'),
     protein: list(params, 'protein'),
-    dietary: list(params, 'dietary'),
+    tags: list(params, 'tags'),
     difficulty: list(params, 'difficulty'),
     cost: list(params, 'cost'),
     verification: list(params, 'verification'),
@@ -70,7 +70,7 @@ function facetValues(r: RecipeData, field: MultiField): string[] {
   switch (field) {
     case 'meal': return r.mealTags;
     case 'protein': return r.proteinTags;
-    case 'dietary': return r.dietaryTags;
+    case 'tags': return r.tags;
     case 'difficulty': return r.difficulty ? [r.difficulty] : [];
     case 'cost': return r.cost ? [r.cost] : [];
     case 'verification': return r.verification ? [r.verification] : [];
@@ -159,6 +159,7 @@ export function recipeWords(r: RecipeData): string[] {
   (r.mealTags ?? []).forEach(add);
   (r.proteinTags ?? []).forEach(add);
   (r.dietaryTags ?? []).forEach(add);
+  (r.tags ?? []).forEach(add);
   (r.ingredients ?? []).forEach((i) => add(i.item));
   return out;
 }

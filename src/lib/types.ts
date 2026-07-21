@@ -45,6 +45,7 @@ export interface RecipeData {
   cost?: string;
   dietary?: string;
   dietaryTags: string[];
+  tags: string[];
   allergens?: string;
   equipment?: string;
   cookingMethod?: string;
@@ -69,7 +70,7 @@ export interface FilterState {
   keywords: string[];
   meal: string[];
   protein: string[];
-  dietary: string[];
+  tags: string[];
   difficulty: string[];
   cost: string[];
   verification: string[];

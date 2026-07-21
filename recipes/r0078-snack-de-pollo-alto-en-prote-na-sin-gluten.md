@@ -42,5 +42,6 @@ mealPrep: ": Not establishedFREEZER SUITABILITY: Not establishedLEFTOVER QUALITY
 source: "https://www.instagram.com/reel/DRkq1oHjcwO/"
 nutrition: {"calories": "Unavailable"}
 keywords: ["gluten-free claim", "low-carb-stylevegetarian", "lunch", "snack"]
+tags: ["budget", "dairy-free", "freezer-friendly", "gluten-free", "high-protein", "kid-friendly", "low-calorie", "low-carb", "sweet", "vegan", "vegetarian"]
 ---
 

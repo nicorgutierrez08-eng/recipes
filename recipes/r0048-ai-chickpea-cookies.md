@@ -30,5 +30,8 @@ freezer: "Not provided"
 source: "https://www.instagram.com/reel/DWUj7VPETDa/"
 verification: "B"
 keywords: ["ai recipe test", "blender cookies", "chickpea cookies", "chickpeas", "chocolate", "dark chocolate chips", "dessert", "easy", "flourless", "flourless cookies", "honey", "lightly golden exterior", "lightly honeyed", "peanut butter", "peanut butter cookies", "plant-forward", "snack", "soft blender cookie", "vegetarian"]
+workingNutrition: {"calories": "~135", "protein": "5 g", "carbs": "15 g", "fat": "8 g", "basis": "per serving"}
+nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
+tags: ["blender", "low-calorie", "sweet", "vegetarian"]
 ---
 

@@ -30,5 +30,8 @@ source: "https://www.instagram.com/reel/DahZwIhx90_/"
 verification: "B"
 nutrition: {"serving": ""}
 keywords: ["blended dessert", "creamy", "dates", "dessert", "greek yogurt", "high-protein claim", "lightly fruity sweetness", "protein powder", "rich chocolate", "smooth", "snack"]
+workingNutrition: {"calories": "~225", "protein": "20 g", "carbs": "39 g", "fat": "2 g", "basis": "per serving"}
+nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
+tags: ["blender", "budget", "high-protein", "low-calorie", "sweet"]
 ---
 

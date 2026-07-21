@@ -42,5 +42,6 @@ freezer: "Not established"
 source: "https://www.instagram.com/reel/DVjRqcuDUVT/"
 verification: "C"
 keywords: ["basil", "black pepper", "calabrian chile", "cheese", "creamy", "dinner", "egg yolk", "garlic", "italian-american", "olive oil", "pasta", "peppery", "savory", "spicy", "tomato paste", "tomato-rich", "vodka", "vodka pasta", "vodka tomato sauce"]
+tags: ["spicy", "vegetarian"]
 ---
 

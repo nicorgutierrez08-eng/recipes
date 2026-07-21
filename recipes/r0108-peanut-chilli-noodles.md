@@ -36,5 +36,6 @@ source: "https://www.instagram.com/reel/DX7E2yeMsQO/"
 verification: "A"
 nutrition: {"calories": "About 890", "fat": "About 49 g", "sodium": "About 1,100 mg", "carbs": "About 92 g", "fiber": "About 10 g", "sugar": "About 5 g", "protein": "About 27 g"}
 keywords: ["asian-inspired", "dinner", "easy", "lunch", "noodles", "peanut butter + tahini"]
+tags: ["quick", "spicy"]
 ---
 

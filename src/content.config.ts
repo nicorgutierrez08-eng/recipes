@@ -79,6 +79,7 @@ const recipes = defineCollection({
     cost: z.string().optional(),
     dietary: z.string().optional(),
     dietaryTags: z.array(z.string()).optional(),
+    tags: z.array(z.string()).optional(), // rich attribute tags (low-calorie, quick, air-fryer, …)
     allergens: z.string().optional(),
     equipment: z.string().optional(),
     cookingMethod: z.string().optional(),

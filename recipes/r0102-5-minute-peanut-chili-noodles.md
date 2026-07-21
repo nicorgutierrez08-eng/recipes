@@ -34,5 +34,6 @@ cookingMethod: "Boil + toss"
 source: "https://www.instagram.com/reel/DXcmh4VEp5j/"
 verification: "B"
 keywords: ["asian-inspired", "dinner", "easy", "lunch", "noodles", "peanut butter"]
+tags: ["quick", "spicy"]
 ---
 

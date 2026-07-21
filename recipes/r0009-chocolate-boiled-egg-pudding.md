@@ -45,5 +45,6 @@ source: "https://www.instagram.com/reel/DQM4DjpjE-t/"
 verification: "A"
 nutrition: {"serving": "1/4 recipe", "calories": "About 181", "protein": "About 8.5 g", "carbs": "About 23 g", "fat": "About 7 g", "fiber": "About 2 g", "sugar": "About 18 g", "sodium": "Not calculated"}
 keywords: ["blender dessert", "boiled eggs", "chocolate", "chocolate pudding", "cocoa", "creamy", "dessert", "eggs", "gluten free", "gluten-free", "high protein", "high-protein dessert", "honey", "meal prep", "no bake", "smooth", "snack", "vanilla", "vegetarian", "very easy"]
+tags: ["blender", "budget", "gluten-free", "high-protein", "low-calorie", "meal-prep", "no-bake", "sweet", "vegetarian"]
 ---
 

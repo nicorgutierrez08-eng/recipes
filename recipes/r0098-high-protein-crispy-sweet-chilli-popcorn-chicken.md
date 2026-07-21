@@ -33,5 +33,6 @@ source: "https://www.instagram.com/reel/DY15SxRIQLm/"
 verification: "A"
 nutrition: {"serving": "1 of 7 servings, including rice", "calories": "544", "fat": "7 g", "carbs": "66.5 g", "protein": "54 g"}
 keywords: ["asian-inspired", "chicken breast", "chilli", "crisp coating", "crispy chicken", "dinner meal prep", "egg", "exact formula unknown", "garlic powder", "high-protein", "intermediate", "lunch", "meal prep", "onion powder", "rice", "savory", "soft rice", "sweet", "sweet-chilli sauce", "white pepper"]
+tags: ["air-fryer", "high-protein", "meal-prep", "spicy", "sweet"]
 ---
 

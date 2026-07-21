@@ -31,5 +31,6 @@ source: "https://www.instagram.com/reel/DVHkAP_Dl3U/"
 verification: "C"
 nutrition: {"calories": "9", "fat": "0.12 g", "carbs": "1 g net", "protein": "1.13 g"}
 keywords: ["9.98 calories", "almond milk", "chocolate chip", "chocolate-chip", "cookie cheesecake bars", "cornstarch or flour", "cream cheese", "creamy", "creamy cheesecake", "dessert", "egg", "fat free cream cheese", "greek yogurt", "high protein dessert", "protein dessert", "snack", "very-low-calorie claim"]
+tags: ["high-protein", "low-calorie", "sweet"]
 ---
 

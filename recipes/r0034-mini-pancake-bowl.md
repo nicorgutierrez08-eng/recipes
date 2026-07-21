@@ -45,5 +45,6 @@ source: "https://www.instagram.com/reel/DPM37HWk7WZ/"
 verification: "B"
 nutrition: {"serving": "1 bowl", "calories": "Creator claims 200"}
 keywords: ["american fitness recipe", "berries", "berry", "breakfast", "cinnamon-sweet", "cottage cheese", "creamy", "easy", "egg whites", "fluffy", "high protein breakfast", "high-protein", "high-volume breakfast", "lightly crisp", "mini pancakes", "nutty", "pancake bowl", "peanut butter", "vegetarian", "volume eating"]
+tags: ["blender", "budget", "high-protein", "low-calorie", "quick", "sweet", "vegetarian"]
 ---
 

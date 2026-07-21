@@ -29,5 +29,8 @@ freezer: "Not provided"
 source: "https://www.instagram.com/reel/DXcwWx6jtWX/"
 verification: "C"
 keywords: ["american baking", "applesauce", "brown sugar substitute", "chocolate", "chocolate chip", "chocolate chunk", "cookie dry mix", "crumbl-style", "dessert", "egg whites", "gian gains", "giant cookie", "honey", "lower-sugar style", "monk fruit", "protein cookie", "protein-focused dessert", "snack", "sweet", "sweeteners", "thick"]
+workingNutrition: {"calories": "~205", "protein": "6 g", "carbs": "35 g", "fat": "2 g", "basis": "per serving"}
+nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
+tags: ["low-calorie", "sweet"]
 ---
 

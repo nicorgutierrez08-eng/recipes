@@ -45,5 +45,6 @@ source: "https://www.instagram.com/reel/DT8NQYAgPJs/"
 verification: "A"
 nutrition: {"serving": "1/4 pan", "calories": "About 430", "protein": "About 43 g", "carbs": "About 19 g", "fat": "About 22 g", "fiber": "About 5 g", "sugar": "Not calculated", "sodium": "Not calculated"}
 keywords: ["cheesy", "cottage cheese", "dinner", "easy", "family dinner", "freezer friendly", "gluten free", "ground beef", "ground beef or turkey", "ground turkey", "high protein", "high-protein", "italian-inspired", "meal prep", "mozzarella", "saucy", "savory", "tender", "tomato", "zucchini lasagna"]
+tags: ["freezer-friendly", "gluten-free", "high-protein", "meal-prep"]
 ---
 

@@ -31,5 +31,6 @@ mealPrep: ": Not establishedFREEZER SUITABILITY: Not establishedLEFTOVER QUALITY
 source: "https://www.instagram.com/reel/DTyLL3oiKAD/"
 nutrition: {"calories": "Unavailable"}
 keywords: ["creamy", "dinner", "gluten", "ham", "latin-inspired", "milk", "possible wheat", "shredded cheese", "tomato"]
+tags: ["budget", "dairy-free", "freezer-friendly", "gluten-free", "high-protein", "kid-friendly", "low-carb", "sweet", "vegan", "vegetarian"]
 ---
 

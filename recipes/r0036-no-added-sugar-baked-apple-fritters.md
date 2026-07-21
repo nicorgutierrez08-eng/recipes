@@ -46,5 +46,6 @@ source: "https://www.instagram.com/reel/DS-jU3wjNXC/"
 verification: "A"
 nutrition: {"serving": "Whole base batch", "calories": "About 450", "protein": "About 12 g", "carbs": "About 59 g", "fat": "About 21 g", "fiber": "About 8 g", "sugar": "About 15 g", "sodium": "About 150 mg"}
 keywords: ["apple", "apple fritters", "baked fritters", "breakfast", "cinnamon", "easy", "egg", "home baking", "lightly golden edge", "lightly nutty", "lunchbox", "no added sugar", "no added sugar base", "oats", "rice flour", "snack", "soft center", "vegetarian", "wheat free ingredients"]
+tags: ["budget", "low-calorie", "no-added-sugar", "sweet", "vegetarian"]
 ---
 

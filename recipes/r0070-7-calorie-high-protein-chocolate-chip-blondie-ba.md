@@ -31,5 +31,6 @@ mealPrep: ": ExcellentFREEZER SUITABILITY: Likely; not creator-statedLEFTOVER QU
 source: "https://www.instagram.com/reel/DUylfRJE6A0/"
 nutrition: {"calories": "7", "fat": "0.15 g", "carbs": "0.75 g net", "protein": "0.75 g"}
 keywords: ["american healthy baking", "casein protein is used", "check protein powder", "chocolate", "dessert", "egg", "gluten", "high-protein-style", "milk", "protein powder", "snack"]
+tags: ["budget", "dairy-free", "freezer-friendly", "gluten-free", "high-protein", "kid-friendly", "low-calorie", "low-carb", "one-pan", "sweet", "vegetarian"]
 ---
 

@@ -29,5 +29,6 @@ mealPrep: ": ExcellentFREEZER SUITABILITY: Yes - creator says freeze slicesLEFTO
 source: "https://www.instagram.com/reel/DUmNCYWElvJ/"
 nutrition: {"calories": "390", "protein": "77 g"}
 keywords: ["breakfast", "exact powder", "gluten-free-style", "milk", "nut-free claimvegetarian", "snack", "stiff-peak technique)", "yeast-free"]
+tags: ["5-ingredient", "budget", "dairy-free", "freezer-friendly", "gluten-free", "high-protein", "kid-friendly", "low-calorie", "low-carb", "sweet", "vegetarian"]
 ---
 

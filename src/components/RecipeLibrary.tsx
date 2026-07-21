@@ -27,7 +27,7 @@ interface Props {
 const FIELD_LABEL: Record<MultiField, string> = {
   meal: 'Meal',
   protein: 'Protein',
-  dietary: 'Dietary',
+  tags: 'Tags',
   difficulty: 'Difficulty',
   cost: 'Cost',
   verification: 'Source level',

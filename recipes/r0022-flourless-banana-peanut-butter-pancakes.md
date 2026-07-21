@@ -46,5 +46,6 @@ source: "https://www.instagram.com/reel/DW4fCqFkQiz/"
 verification: "A"
 nutrition: {"serving": "Entire batter", "calories": "About 273", "protein": "About 11 g", "carbs": "About 31 g", "fat": "About 13 g", "fiber": "About 4 g", "sugar": "About 16 g", "sodium": "About 280 mg"}
 keywords: ["4 ingredients", "american", "banana", "banana pancakes", "breakfast", "easy", "egg", "flourless", "lightly crisp", "lightly sweet", "no added sugar", "nutty", "one bowl", "peanut butter", "quick breakfast", "soft", "tender", "vegetarian"]
+tags: ["5-ingredient", "budget", "low-calorie", "no-added-sugar", "quick", "sweet", "vegetarian"]
 ---
 

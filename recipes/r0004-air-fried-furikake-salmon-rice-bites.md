@@ -46,5 +46,6 @@ source: "https://www.instagram.com/reel/DTIiX7NjcWG/"
 verification: "B"
 nutrition: {"serving": ""}
 keywords: ["air fryer", "appetizer", "crispy", "crispy outside", "furikake", "intermediate", "japanese-inspired", "lunch", "party appetizer", "pescatarian", "salmon", "salmon bites", "savory", "sesame", "snack", "soy sauce", "sushi rice", "tender inside", "umami"]
+tags: ["air-fryer", "low-calorie", "pescatarian"]
 ---
 

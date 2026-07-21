@@ -46,5 +46,6 @@ source: "https://www.instagram.com/reel/DXorqvfjWY5/"
 verification: "B"
 nutrition: {"serving": ""}
 keywords: ["3 ingredients", "airy", "baked", "breakfast", "cloud bread style", "cloud-like", "easy", "egg whites", "gluten free ingredients", "internet high-protein", "lightly sweet", "low fat", "mild", "protein bread", "protein snack", "snack", "soft", "technique-sensitive", "toast substitute", "vegetarian"]
+tags: ["5-ingredient", "budget", "gluten-free", "high-protein", "low-calorie", "sweet", "vegetarian"]
 ---
 

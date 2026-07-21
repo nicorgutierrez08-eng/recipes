@@ -45,5 +45,6 @@ source: "https://www.instagram.com/reel/DTvyLpeAe15/"
 verification: "C"
 nutrition: {"serving": ""}
 keywords: ["banana", "banana muffins", "berry-studded", "blueberry", "blueberry muffins", "breakfast", "breakfast snack", "easy", "eggs + peanut butter", "freezer friendly", "fruit muffins", "home baking", "moist", "needs caption", "nutty", "partial recipe", "peanut butter", "snack", "soft", "vegetarian"]
+tags: ["budget", "freezer-friendly", "low-calorie", "sweet", "vegetarian"]
 ---
 

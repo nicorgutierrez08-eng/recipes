@@ -29,5 +29,8 @@ freezer: "Not established"
 source: "https://www.instagram.com/reel/DVg5Zsaj_ht/"
 verification: "C"
 keywords: ["bacon", "breakfast", "brunch", "cheese", "cheesy", "crispy exterior", "crispy rice paper", "cured pork", "eggs", "french-inspired fusion", "ham and cheese", "lunch", "rice paper", "rice paper croque madame", "savory", "shredded cheese", "smoky", "the chef out west"]
+workingNutrition: {"calories": "~525", "protein": "41 g", "carbs": "16 g", "fat": "32 g", "basis": "per serving"}
+nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
+tags: ["gluten-free"]
 ---
 

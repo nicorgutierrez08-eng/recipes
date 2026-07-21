@@ -33,5 +33,8 @@ source: "https://www.instagram.com/reel/DTifPmciG3r/"
 verification: "B"
 nutrition: {"serving": "1 parcel (inferred)"}
 keywords: ["breakfast", "cheesy", "contemporary", "crispy cheese edge", "egg", "grated cheese", "honey", "hot honey", "hot honey (small amount", "quantity unknown)", "savory", "snack", "soft egg", "sweet heat", "type flexible"]
+workingNutrition: {"calories": "~250", "protein": "14 g", "carbs": "17 g", "fat": "15 g", "basis": "per serving"}
+nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
+tags: ["5-ingredient", "budget", "low-calorie", "spicy", "sweet", "vegetarian"]
 ---
 

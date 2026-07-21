@@ -28,5 +28,7 @@ freezer: "Not established"
 source: "https://www.instagram.com/reel/DVBohoyDbIn/"
 verification: "C"
 keywords: ["chicken broth only", "chicken broth pasta", "chicken-broth", "childhood pasta", "cooking oil", "dinner", "garlic", "garlic pasta", "garlicky", "home-style pasta", "lunch", "nostalgic", "nostalgic pasta", "oil base", "pantry meal", "pasta", "savory", "simple pantry pasta", "simple pasta"]
+workingNutrition: {"calories": "~590", "protein": "16 g", "carbs": "83 g", "fat": "20 g", "basis": "per serving"}
+nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
 ---
 

@@ -28,5 +28,8 @@ freezer: "Not provided"
 source: "https://www.instagram.com/reel/DVWiHOkiO5v/"
 verification: "C"
 keywords: ["blender bread", "bread-like", "breakfast", "butter", "carnivore bread", "carnivore-style", "cottage cheese", "cottage cheese bread", "egg bread", "eggs", "eggy", "flourless", "flourless bread", "grain free", "grain-free", "rich", "side", "snack"]
+workingNutrition: {"calories": "~160", "protein": "7 g", "carbs": "2 g", "fat": "14 g", "basis": "per serving"}
+nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
+tags: ["5-ingredient", "blender", "low-calorie"]
 ---
 

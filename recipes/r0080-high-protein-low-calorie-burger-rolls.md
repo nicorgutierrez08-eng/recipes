@@ -29,5 +29,6 @@ mealPrep: ": Likely moderateFREEZER SUITABILITY: Not establishedLEFTOVER QUALITY
 source: "https://www.instagram.com/reel/DT3l9WmkmFQ/"
 nutrition: {"calories": "Unavailable"}
 keywords: ["american fusion", "black pepper", "cheesy", "dinner", "garlic powder", "lunch", "paprika", "sesame", "sesame present", "snack", "wrapper"]
+tags: ["budget", "dairy-free", "freezer-friendly", "gluten-free", "high-protein", "kid-friendly", "low-calorie", "low-carb", "sweet", "vegan", "vegetarian"]
 ---
 
