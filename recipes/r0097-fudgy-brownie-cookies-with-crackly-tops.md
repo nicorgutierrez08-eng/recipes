@@ -35,6 +35,6 @@ source: "https://www.instagram.com/reel/DYxUhANpOFP/"
 verification: "A"
 nutrition: {"serving": "1 cookie", "calories": "175", "fat": "3 g", "sodium": "116 mg", "carbs": "36 g", "fiber": "2 g", "sugar": "32 g", "protein": "2 g"}
 keywords: ["american", "chewy edge", "chocolate chips", "crackly top", "deep chocolate", "dessert", "easy", "egg whites", "fudgy center", "no mixer", "one-bowl", "powdered sugar", "snack", "sweet", "vegetarian"]
-tags: ["budget", "low-calorie", "sweet", "vegetarian"]
+tags: ["budget", "hot", "low-calorie", "sweet", "vegetarian"]
 ---
 

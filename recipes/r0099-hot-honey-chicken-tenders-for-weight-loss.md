@@ -38,6 +38,6 @@ source: "https://www.instagram.com/reel/DZDK2Buxif-/"
 verification: "C"
 nutrition: {"serving": ""}
 keywords: ["chicken", "dinner", "honey", "hot honey", "lunch", "possible coating", "sweet heat", "unknown"]
-tags: ["budget", "low-calorie", "spicy", "sweet"]
+tags: ["budget", "hot", "low-calorie", "spicy", "sweet"]
 ---
 

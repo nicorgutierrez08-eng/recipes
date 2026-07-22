@@ -46,6 +46,6 @@ source: "https://www.instagram.com/reel/DNs1bviWmMc/"
 verification: "B"
 nutrition: {"serving": "1 slice"}
 keywords: ["breakfast", "breakfast prep", "cottage cheese", "cottage cheese + egg", "dense", "easy", "gluten free", "gluten-free stated", "hearty", "high fiber", "meal prep", "modern wellness baking", "no knead bread", "no seed oils stated", "one bowl", "psyllium husk", "savory", "seed bread", "seeded", "side", "sliceable", "toast"]
-tags: ["budget", "gluten-free", "high-fiber", "low-calorie", "meal-prep"]
+tags: ["budget", "cold", "gluten-free", "high-fiber", "hot", "low-calorie", "meal-prep"]
 ---
 

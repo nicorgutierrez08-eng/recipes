@@ -37,6 +37,6 @@ nutrition: {"serving": "1 donut hole", "protein": "5 g"}
 keywords: ["american", "beginner", "blueberries", "blueberry", "breakfast", "cottage cheese", "dessert", "egg", "flour", "fluffy", "high-protein claim", "lemon", "lemony", "lightly tangy", "maple syrup", "nut-free", "powdered sugar", "snack", "sweet", "tender with glaze", "vanilla glaze", "vegetarian"]
 workingNutrition: {"calories": "~170", "protein": "6 g", "carbs": "30 g", "fat": "2 g", "basis": "per serving"}
 nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
-tags: ["air-fryer", "blender", "high-protein", "low-calorie", "sweet", "vegetarian"]
+tags: ["air-fryer", "blender", "high-protein", "hot", "low-calorie", "sweet", "vegetarian"]
 ---
 

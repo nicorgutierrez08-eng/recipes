@@ -30,6 +30,6 @@ mealPrep: ": Good (inferred)FREEZER SUITABILITY: Likely before cooking; not crea
 source: "https://www.instagram.com/reel/DVPPNTfjZC3/"
 nutrition: {"calories": "155", "protein": "23 g"}
 keywords: ["cheesy", "crisp-cheesy exterior", "garlic powder", "ground ginger", "paprika", "parmesan", "snack"]
-tags: ["budget", "dairy-free", "freezer-friendly", "gluten-free", "high-protein", "kid-friendly", "low-calorie", "low-carb", "spicy", "sweet", "vegan", "vegetarian"]
+tags: ["budget", "cold", "dairy-free", "freezer-friendly", "gluten-free", "high-protein", "kid-friendly", "low-calorie", "low-carb", "spicy", "sweet", "vegan", "vegetarian"]
 ---
 

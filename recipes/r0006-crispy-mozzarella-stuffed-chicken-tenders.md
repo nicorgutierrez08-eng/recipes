@@ -45,6 +45,6 @@ source: "https://www.instagram.com/reel/DTVZzdGjjhf/"
 verification: "A"
 nutrition: {"serving": "1 of 2 tenders", "calories": "About 330", "protein": "About 35 g", "carbs": "About 3 g", "fat": "About 21 g", "fiber": "0 g", "sugar": "About 1 g", "sodium": "Not calculated"}
 keywords: ["air fryer", "american", "cheese pull", "cheesy", "crispy", "dinner", "easy", "garlicky", "ground chicken", "high protein", "high-protein", "juicy", "low carb", "low-carb-style", "lunch", "melty", "mozzarella sticks", "parmesan crust", "quick protein snack", "savory", "snack", "stuffed chicken"]
-tags: ["air-fryer", "budget", "high-protein", "low-calorie", "low-carb"]
+tags: ["air-fryer", "budget", "high-protein", "hot", "low-calorie", "low-carb"]
 ---
 

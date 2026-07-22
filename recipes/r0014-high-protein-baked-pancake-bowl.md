@@ -46,6 +46,6 @@ source: "https://www.instagram.com/reel/DL3azrTzbpX/"
 verification: "A"
 nutrition: {"serving": "1 bowl", "calories": "338", "protein": "31 g", "carbs": "32 g", "fat": "8.5 g", "fiber": "About 3 g", "sugar": "About 2-5 g", "sodium": "About 145 mg"}
 keywords: ["american", "baked", "banana free", "breakfast", "cake-like", "fluffy", "high protein breakfast", "high-protein", "lightly sweet", "meal prep", "one bowl", "pancake bowl", "post-workout", "protein powder", "single serve", "vanilla", "vegetarian", "very easy", "yogurt"]
-tags: ["budget", "high-protein", "low-calorie", "meal-prep", "sweet", "vegetarian"]
+tags: ["budget", "high-protein", "hot", "low-calorie", "meal-prep", "sweet", "vegetarian"]
 ---
 

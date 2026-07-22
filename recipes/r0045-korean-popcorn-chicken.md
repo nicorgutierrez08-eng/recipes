@@ -30,6 +30,6 @@ verification: "B"
 keywords: ["appetizer", "chicken", "chicken bites", "crispy", "dinner", "garlic", "gochugaru", "gochujang", "gochujang chicken", "gochujang-based sauce", "ketchup", "korean popcorn chicken", "korean-inspired", "lunch", "rice vinegar", "savory", "sesame", "sesame oil", "spicy", "spicy chicken", "sweet", "tangy"]
 workingNutrition: {"calories": "~560", "protein": "46 g", "carbs": "12 g", "fat": "30 g", "basis": "per serving"}
 nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
-tags: ["high-protein", "spicy", "sweet"]
+tags: ["high-protein", "hot", "spicy", "sweet"]
 ---
 

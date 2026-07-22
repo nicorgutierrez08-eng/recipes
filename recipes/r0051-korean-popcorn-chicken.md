@@ -31,6 +31,6 @@ verification: "B"
 keywords: ["appetizer", "aromatic", "chicken breast", "chilli powder", "cornflake chicken", "cornflakes", "crispy chicken bites", "crispy coating implied", "dinner", "garlic powder", "ground ginger", "korean popcorn chicken", "korean-inspired", "lunch", "paprika", "savory", "spicy"]
 workingNutrition: {"calories": "~475", "protein": "40 g", "carbs": "12 g", "fat": "18 g", "basis": "per serving"}
 nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
-tags: ["high-protein", "spicy"]
+tags: ["high-protein", "hot", "spicy"]
 ---
 

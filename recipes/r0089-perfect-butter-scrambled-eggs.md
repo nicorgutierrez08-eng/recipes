@@ -44,6 +44,6 @@ source: "https://www.instagram.com/reel/DZHnnBwNOgj/"
 verification: "B"
 nutrition: {"serving": ""}
 keywords: ["breakfast", "buttery", "contemporary", "easy", "egg", "low-carb-style", "savory", "soft", "vegetarian"]
-tags: ["5-ingredient", "budget", "low-calorie", "low-carb", "quick", "vegetarian"]
+tags: ["5-ingredient", "budget", "cold", "hot", "low-calorie", "low-carb", "quick", "vegetarian"]
 ---
 

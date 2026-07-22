@@ -41,5 +41,6 @@ freezer: "Not recommended for risotto (general inference)"
 source: "https://www.instagram.com/reel/DWXgPlJD3Kx/"
 verification: "B"
 keywords: ["date night", "date-night meal", "dinner", "duck breast", "duck risotto", "fruity", "future wife series", "italian-inspired fusion", "orange", "pepper", "plum wine", "red wine", "rich", "sake", "salt", "savory", "shallots", "wine-forward"]
+tags: ["hot"]
 ---
 

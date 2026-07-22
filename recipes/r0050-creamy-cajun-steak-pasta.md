@@ -31,6 +31,6 @@ verification: "B"
 keywords: ["black pepper", "cajun seasoning", "cajun steak pasta", "cajun-spiced", "creamy", "creamy pasta", "dinner", "garlic", "garlic cream sauce", "garlicky", "indulgent", "new york strip", "new york strip steak", "parmesan", "pasta", "salt", "savory", "steak dinner", "tender steak"]
 workingNutrition: {"calories": "~1020", "protein": "48 g", "carbs": "63 g", "fat": "62 g", "basis": "per serving"}
 nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
-tags: ["high-protein", "spicy"]
+tags: ["cold", "high-protein", "hot", "spicy"]
 ---
 

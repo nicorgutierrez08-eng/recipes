@@ -32,6 +32,6 @@ nutrition: {"serving": ""}
 keywords: ["buttery", "cheese", "cheesy", "flour", "garlic butter", "garlic powder", "garlicky", "greek yogurt", "italian-inspired", "salt", "side", "snack"]
 workingNutrition: {"calories": "~530", "protein": "27 g", "carbs": "54 g", "fat": "22 g", "basis": "per serving"}
 nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
-tags: ["budget", "high-protein"]
+tags: ["budget", "high-protein", "hot"]
 ---
 

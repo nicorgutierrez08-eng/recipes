@@ -43,6 +43,6 @@ source: "https://www.instagram.com/reel/DXGKwDvkttl/"
 verification: "C"
 nutrition: {"serving": ""}
 keywords: ["advanced", "contains meat", "date night", "dinner", "fusion", "japanese inspired", "japanese-inspired fusion", "party", "party centerpiece", "party food", "rib eye", "rib-eye steak", "savory", "showstopper", "steak", "sticky rice", "sushi cake", "sushi rice", "sweet", "tender beef", "teriyaki", "umami"]
-tags: ["sweet"]
+tags: ["hot", "sweet"]
 ---
 

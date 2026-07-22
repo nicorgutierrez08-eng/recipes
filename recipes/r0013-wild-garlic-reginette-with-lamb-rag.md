@@ -43,5 +43,6 @@ source: "https://www.instagram.com/reel/DJzTppuIIl0/"
 verification: "C"
 nutrition: {"serving": ""}
 keywords: ["advanced", "dinner", "dinner party", "fresh pasta", "herbaceous", "italian", "lamb", "lamb ragu", "reginette", "rich", "ridged pasta", "savory", "silky sauce", "weekend cooking", "weekend project", "wild garlic"]
+tags: ["hot"]
 ---
 

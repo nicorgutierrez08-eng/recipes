@@ -32,6 +32,6 @@ nutrition: {"serving": ""}
 keywords: ["butter chicken sauce", "buttery", "chicken in filling", "details unknown)", "dinner", "dutch creator", "flour", "homemade bread", "indian-inspired", "intermediate", "lunch", "meat filling", "savory (from title", "spiced"]
 workingNutrition: {"calories": "~470", "protein": "21 g", "carbs": "43 g", "fat": "22 g", "basis": "per serving"}
 nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
-tags: ["budget", "spicy"]
+tags: ["budget", "cold", "spicy"]
 ---
 

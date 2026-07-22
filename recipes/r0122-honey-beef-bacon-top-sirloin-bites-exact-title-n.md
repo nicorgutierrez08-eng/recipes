@@ -35,6 +35,6 @@ cookingMethod: "Bake"
 source: "https://www.instagram.com/reel/DW2CsnAElmj/"
 verification: "B"
 keywords: ["american", "appetizer", "dinner", "honey", "intermediate", "top sirloin"]
-tags: ["low-calorie"]
+tags: ["hot", "low-calorie"]
 ---
 

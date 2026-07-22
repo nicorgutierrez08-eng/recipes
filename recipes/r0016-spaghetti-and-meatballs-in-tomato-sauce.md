@@ -41,6 +41,6 @@ source: "https://www.instagram.com/reel/DGIZyJkNKbk/"
 verification: "C"
 nutrition: {"serving": ""}
 keywords: ["comfort food", "dinner", "family dinner", "freezer friendly", "garlic", "ground meat", "intermediate", "italian", "meatballs", "saucy pasta", "savory", "spaghetti", "tender meatballs", "tomato", "tomato sauce"]
-tags: ["budget", "freezer-friendly"]
+tags: ["budget", "freezer-friendly", "hot"]
 ---
 

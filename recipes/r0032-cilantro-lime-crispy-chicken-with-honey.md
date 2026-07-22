@@ -45,6 +45,6 @@ source: "https://www.instagram.com/reel/DT9E6SrgdR4/"
 verification: "A"
 nutrition: {"serving": "1 serving", "calories": "400", "protein": "50 g"}
 keywords: ["baked chicken", "chicken thighs", "cilantro lime chicken", "citrusy", "crisp edges", "dinner", "easy", "garlic", "gluten-free ingredients", "herbal", "high protein", "high-protein", "honey", "juicy center", "latin-inspired", "lunch", "meal prep", "sweet-savory", "weeknight dinner", "weeknight meal prep"]
-tags: ["budget", "gluten-free", "high-protein", "low-calorie", "meal-prep", "sweet"]
+tags: ["budget", "gluten-free", "high-protein", "hot", "low-calorie", "meal-prep", "sweet"]
 ---
 

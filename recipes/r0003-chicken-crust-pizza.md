@@ -44,6 +44,6 @@ source: "https://www.instagram.com/reel/DTu_BopEnVv/"
 verification: "A"
 nutrition: {"serving": "1 personal pizza", "calories": "485", "protein": "About 65 g", "carbs": "27 g", "fat": "8 g", "fiber": "4 g"}
 keywords: ["american", "baked", "cheesy", "chicken crust", "crisp-edged", "dinner", "easy", "garlicky", "ground chicken", "high protein", "high-protein", "italian-inspired", "low carb", "low-carb-style", "lunch", "meal prep", "mozzarella", "oat flour", "pizza", "savory"]
-tags: ["budget", "high-protein", "low-carb", "meal-prep", "one-pan"]
+tags: ["budget", "high-protein", "hot", "low-carb", "meal-prep", "one-pan"]
 ---
 

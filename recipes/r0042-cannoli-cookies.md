@@ -33,6 +33,6 @@ verification: "B"
 keywords: ["cannoli cookies", "cannoli-inspired", "chewy", "chocolate", "chocolate chips", "cream cheese", "dairy", "dessert", "eggs", "italian-american dessert", "large", "mascarpone", "oversized cookies", "snack", "soft", "sugar", "sweet", "vanilla", "wheat flour", "white sugar"]
 workingNutrition: {"calories": "~545", "protein": "12 g", "carbs": "91 g", "fat": "15 g", "basis": "per serving"}
 nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
-tags: ["sweet", "vegetarian"]
+tags: ["cold", "hot", "sweet", "vegetarian"]
 ---
 

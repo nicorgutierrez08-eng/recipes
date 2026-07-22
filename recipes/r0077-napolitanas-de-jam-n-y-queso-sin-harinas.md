@@ -30,6 +30,6 @@ mealPrep: ": Shape ahead; best cooked freshFREEZER SUITABILITY: Not establishedL
 source: "https://www.instagram.com/reel/DUGAECICGFm/"
 nutrition: {"calories": "Unavailable"}
 keywords: ["breakfast", "cheese", "cheesy", "lunch", "milk", "sesame", "snack", "spanish-inspired fusion", "verify ham"]
-tags: ["5-ingredient", "air-fryer", "budget", "dairy-free", "freezer-friendly", "gluten-free", "high-protein", "kid-friendly", "low-carb", "sweet", "vegan", "vegetarian"]
+tags: ["5-ingredient", "air-fryer", "budget", "cold", "dairy-free", "freezer-friendly", "gluten-free", "high-protein", "hot", "kid-friendly", "low-carb", "sweet", "vegan", "vegetarian"]
 ---
 

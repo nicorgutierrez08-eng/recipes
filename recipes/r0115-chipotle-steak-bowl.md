@@ -35,6 +35,6 @@ cookingMethod: "Marinate + sear"
 source: "https://www.instagram.com/reel/DXzU2wdxq1Y/"
 verification: "B"
 keywords: ["dinner", "intermediate", "lunch", "mexican-inspired", "ribeye steak"]
-tags: ["grill"]
+tags: ["grill", "hot"]
 ---
 

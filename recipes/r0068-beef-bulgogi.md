@@ -29,6 +29,6 @@ mealPrep: ": Likely goodFREEZER SUITABILITY: Marinated beef likely; not creator-
 source: "https://www.instagram.com/reel/DU5_l5lgoZr/"
 nutrition: {"calories": "Unavailable"}
 keywords: ["dinner", "honey", "korean", "savory", "sesame", "wheat"]
-tags: ["dairy-free", "freezer-friendly", "gluten-free", "high-protein", "kid-friendly", "low-carb", "spicy", "sweet", "vegan", "vegetarian"]
+tags: ["cold", "dairy-free", "freezer-friendly", "gluten-free", "high-protein", "hot", "kid-friendly", "low-carb", "spicy", "sweet", "vegan", "vegetarian"]
 ---
 

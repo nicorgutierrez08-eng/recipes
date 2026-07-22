@@ -32,6 +32,6 @@ verification: "B"
 keywords: ["american baking", "banana", "banana bread cookie", "banana cookies", "brown butter", "brown butter cookies", "brown sugar", "chewy", "chilled cookie dough", "chocolate", "chocolate chip", "cinnamon", "dessert", "egg yolks", "flour", "oatmeal", "oatmeal cookies", "oats", "snack"]
 workingNutrition: {"calories": "~295", "protein": "3 g", "carbs": "44 g", "fat": "13 g", "basis": "per serving"}
 nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
-tags: ["low-calorie", "sweet", "vegetarian"]
+tags: ["cold", "hot", "low-calorie", "sweet", "vegetarian"]
 ---
 

@@ -35,6 +35,6 @@ cookingMethod: "Bake; exact process unavailable"
 source: "https://www.instagram.com/reel/DYYc-qoMjpa/"
 verification: "B"
 keywords: ["american baking", "cottage cheese", "easy to intermediate", "gluten-free flour", "side", "snack"]
-tags: ["gluten-free", "low-calorie"]
+tags: ["gluten-free", "hot", "low-calorie"]
 ---
 

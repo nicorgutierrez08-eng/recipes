@@ -31,6 +31,6 @@ nutrition: {"serving": ""}
 keywords: ["burrata", "comfort food", "creamy", "creamy burrata", "dinner", "garlic", "incomplete", "intermediate", "italian sausage", "italian-american", "rich", "rigatoni", "saucy pasta", "savory", "shallot", "spicy", "spicy vodka sauce"]
 workingNutrition: {"calories": "~720", "protein": "25 g", "carbs": "61 g", "fat": "37 g", "basis": "per serving"}
 nutritionBasis: "CALCULATED FROM EDITORIAL WORKING RECIPE"
-tags: ["freezer-friendly", "spicy"]
+tags: ["freezer-friendly", "hot", "spicy"]
 ---
 

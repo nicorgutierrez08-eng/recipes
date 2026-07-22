@@ -188,9 +188,10 @@ export function keywordMatches(words: string[], keyword: string): boolean {
     for (const w of words) {
       if (w === kw) return true;
       if (kw.length >= 3 && w.startsWith(kw)) return true;
-      // Forgive a single typo — but only on longer words, so short words like
-      // "pasta"/"paste" never collide while "chikn"→"chicken" still matches.
-      if (kw.length >= 6 && w.length >= 5 && within1(w, kw)) return true;
+      // Forgive a single typo whenever the longer of the two words is >= 6
+      // letters (so "salmn"→salmon, "chiken"→chicken, "brocoli"→broccoli all
+      // match), while short words like "pasta"/"paste" stay distinct.
+      if (Math.max(w.length, kw.length) >= 6 && within1(w, kw)) return true;
     }
     return false;
   });

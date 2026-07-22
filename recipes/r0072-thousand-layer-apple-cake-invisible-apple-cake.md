@@ -30,6 +30,6 @@ mealPrep: ": Good after coolingFREEZER SUITABILITY: Possible; not creator-stated
 source: "https://www.instagram.com/reel/DUGBZKOjKzd/"
 nutrition: {"calories": "Unavailable"}
 keywords: ["apricot jam", "citrus", "dense", "dessert", "egg", "flour", "french-inspired", "gluten", "icing sugar", "layered", "milk", "orange", "snack", "vanilla"]
-tags: ["budget", "dairy-free", "freezer-friendly", "gluten-free", "high-protein", "kid-friendly", "low-carb", "quick", "spicy", "sweet", "vegetarian"]
+tags: ["budget", "cold", "dairy-free", "freezer-friendly", "gluten-free", "high-protein", "hot", "kid-friendly", "low-carb", "quick", "spicy", "sweet", "vegetarian"]
 ---
 
